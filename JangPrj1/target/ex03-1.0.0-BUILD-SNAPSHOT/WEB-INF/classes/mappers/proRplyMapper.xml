@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="pro_reply">
+  	<select id="list" resultType="com.spring.shoping.dvo.ProReplyVO">
+  		SELECT 
+  		 rid,
+  		 pseq,
+  		 content,
+  		 idate,
+  		 updatedate,
+  		 reply
+  		FROM  pro_reply
+  		WHERE pseq=#{pseq}
+  		ORDER BY rid DESC
+  		
+  	</select>
+  	<insert id="insert">
+  	 INSERT INTO pro_reply
+  	  (rid,pseq,content,reply)
+  	  VALUES(pro_reply_seq.nextval,#{pseq},#{content},#{reply})
+  	  
+  	
+  	</insert> 
+  	<update id="update">
+  		UPDATE pro_reply
+  		 SET content=#{content}
+  		WHERE rid=#{rid}
+  	
+  	</update>
+  	 <delete id="delete">
+  	 	DELETE FROM pro_reply
+  	 	 WHERE rid=#{rid}
+  	 
+  	 </delete>
+  	 <select id="getReply" resultType="com.spring.shoping.dvo.ProReplyVO">
+  	  SELECT 
+  	 	 rid,
+  		 pseq,
+  		 content,
+  		 idate,
+  		 updatedate,
+  		 reply
+  	  FROM pro_reply
+  	  WHERE rid=#{rid}
+  	 </select>
+  	 
+  </mapper>

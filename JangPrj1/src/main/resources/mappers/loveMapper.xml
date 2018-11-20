@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="love">
+  	<select id="prLoveCount" resultType="int">
+		SELECT
+		nvl(love_check,0)
+		FROM pr_love RIGHT OUTER JOIN dual
+		on pseq=#{pseq}
+	
+	</select>
+	<insert id="prLoveInsert">
+		INSERT INTO 
+		 pr_love
+		 
+		VALUES(pr_love_seq.nextval,#{pseq},1)
+	
+	
+	</insert>
+	<select id="prLoveCheck" parameterType="java.util.Map" resultType="int">
+	SELECT COUNT(*)
+	FROM pr_love
+	WHERE pseq=#{pseq} AND pr_member=#{pr_member}
+	
+	</select>
+	<update id="prLovePlus">
+	 UPDATE pr_love
+	  SET love_check=love_check+1
+	     
+	WHERE pseq=#{pseq}
+	
+	</update>
+	<insert id="prLoveMemberI" parameterType="java.util.Map">
+	INSERT INTO 
+		 pr_member
+		 
+		VALUES(#{pr_member},#{pseq})
+	
+	</insert>
+	<select id="prLoveMemberCh" parameterType="java.util.Map" resultType="int">
+		SELECT 
+		 count(*)
+	    FROM 
+	     pr_member
+	    WHERE pseq=#{pseq} AND pr_member=#{pr_member}
+	</select>
+	<update id="prLoveM">
+	 UPDATE pr_love
+	  SET love_check=love_check-1
+	
+	WHERE pseq=#{pseq}
+	
+	</update>
+	<delete id="prLoveMemberD" parameterType="java.util.Map">
+	DELETE FROM pr_member
+	WHERE pseq=#{pseq} AND pr_member=#{pr_member}
+	
+	</delete>
+	<delete id="prLoveD">
+	DELETE FROM pr_love
+	WHERE pseq=#{pseq}
+	</delete>
+	</mapper>

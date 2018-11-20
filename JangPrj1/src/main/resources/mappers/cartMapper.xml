@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="cart">
+  	<select id="cartList" resultType="com.spring.cart.dvo.CartVO">
+  		SELECT 
+  		 *
+  		FROM
+  		(SELECT o.cseq,o.id,o.pseq,p.name pname,o.quantity,p.image image,o.indate, p.price2 price, o.result
+  		
+FROM cart o INNER JOIN product p ON o.pseq=p.pseq AND result='1')		 
+  		WHERE
+  		 id=#{id}
+  		ORDER BY cseq DESC
+  	</select>
+  	<delete id="cartDelete">
+  	 DELETE FROM cart
+  	  WHERE cseq=#{cseq}
+  	
+  	
+  	</delete>
+
+  	<insert id="cartInsert">
+  	INSERT INTO cart
+  	 (cseq,id,pseq,quantity,image)
+  	VALUES(cart_seq.nextval,#{id},#{pseq},#{quantity},#{image})
+  	</insert>
+  
+  </mapper>

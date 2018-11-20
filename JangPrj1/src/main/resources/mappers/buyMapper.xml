@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="buy">
+ 	<insert id="orderIn" parameterType="com.spring.buy.dvo.OrderBuyVO">
+ 		<selectKey keyProperty="oseq" resultType="int" order="BEFORE">
+		    select orders_seq.nextval FROM DUAL
+		</selectKey>
+ 		INSERT INTO orders 
+ 		(oseq,id)
+ 		VALUES
+ 		(#{oseq}, #{id})
+ 		
+ 	</insert> 
+  	
+  	<insert id="orderDetailIn" parameterType="com.spring.buy.dvo.OrderBuyVO">
+  		INSERT INTO order_detail
+  		 (odseq, oseq,pseq,quantity)
+  		 VALUES(order_detail_seq.nextval, #{oseq}, #{pseq}, #{quantity})
+  	
+  	</insert>
+  	
+  	<select id="orderDetailSel" resultType="com.spring.buy.dvo.OrderBuyVO">
+  	 SELECT 
+  	 	*
+	FROM order_view
+	WHERE id=#{id}
+
+  	
+  	
+  	</select>
+  	
+  	  	<select id="oseqMax" resultType="int">
+  		SELECT max(oseq)
+  		FROM
+  		orders
+  	</select>	
+  	
+  	<delete id="orderDel">
+  	  DELETE FROM orders
+  	  WHERE oseq=#{oseq}
+  	
+  	</delete>
+  	
+  	<delete id="orderDetailDel">
+  		  DELETE FROM ORDER_DETAIL
+  	  WHERE oseq=#{oseq}
+  	</delete>
+  	
+  	
+  </mapper>
+  
+  
+  

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="shoping">
+  <select id="bestItem" resultType="com.spring.shoping.dvo.ProductVO">
+  	SELECT
+     pseq,
+     name,
+     price2,
+     image
+    FROM PRODUCT
+  	WHERE
+  	  bestyn='y'
+  	 AND
+  	 rownum &lt;= 4  	
+  	ORDER BY indate DESC	
+  </select>
+  <select id="newItem" resultType="com.spring.shoping.dvo.ProductVO">
+  	SELECT
+  	 pseq,
+     name,
+     price2,
+     image
+    FROM PRODUCT
+    WHERE
+     rownum &lt;=4
+    AND
+     useyn='y'
+    ORDER BY indate DESC
+  	 
+  
+  </select>
+  <select id="readItem" resultType="com.spring.shoping.dvo.ProductVO">
+  	SELECT
+  	 pseq,
+  	 name,
+  	 kind,
+  	 price1,
+  	 price2,
+  	 price3,
+  	 image,
+  	 content,
+  	 indate,
+  	 useyn,
+  	 bestyn
+  	FROM PRODUCT
+  	WHERE
+  	 pseq=#{pseq}
+  
+  </select>
+  <select id="catagory" parameterType="java.util.Map" resultType="com.spring.shoping.dvo.ProductVO">
+  	<include refid="pageHeader"/>
+  	SELECT
+  	 pseq,
+  	 name,
+  	 kind,
+  	 price1,
+  	 price2,
+  	 price3,
+  	 image,
+  	 content,
+  	 indate,
+  	 useyn,
+  	 bestyn
+  	FROM PRODUCT
+  	WHERE
+  	 kind=#{kind}
+  	ORDER BY indate DESC
+  	<include refid="pageFooter"/>
+  </select>
+  <select id="pageCount" resultType="int">
+  SELECT
+   count(pseq)
+  FROM PRODUCT
+  WHERE
+   kind=#{kind}
+  </select>
+  <select id="catagoeyTitle" resultType="String">
+   SELECT 
+     DECODE(kind,1,'Heels',2,'Boots',3,'Sandals',4,'Sneakers',5,'on Sale') as title
+   FROM PRODUCT
+    WHERE
+     kind=#{kind}
+    AND
+     ROWNUM=1
+
+  </select>
+ 
+
+  <sql id="pageHeader">
+		SELECT * FROM(
+		SELECT ROWNUM AS rn,A.*FROM(
+
+
+	</sql>
+	<sql id="pageFooter">
+		)A
+		)WHERE rn BETWEEN #{pageVO.startPage} AND #{pageVO.endPage}
+
+	</sql>
+
+  </mapper>
