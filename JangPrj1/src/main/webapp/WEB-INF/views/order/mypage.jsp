@@ -75,7 +75,14 @@
 					pattern="###,###,###" />${price}원</td>
 					<c:set var="sum" value="${sum+vo.price*vo.quantity}"/>		
 					 <td><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/> </td>
-				<td>조회</td>
+				<c:choose>
+					<c:when test="${vo.result=='1'}">
+						<td>처리중</td>
+					</c:when>
+					<c:otherwise>
+						<td>처리완료</td>
+					</c:otherwise>
+				</c:choose>
 			   <td><button id="re" onclick="del('${vo.oseq}')">취소</button></td>
 	 		 </tr>
 	 		 

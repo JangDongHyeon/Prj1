@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="qna">
+  	<select id="qnaList" resultType="com.spring.board.dvo.QnaVO">
+  	 SELECT 
+  	  qseq,
+  	  subject,
+  	  content,
+  	  reply,
+  	  id,
+  	  rep,
+  	  indate,
+  	  bgroup,
+  	  bstep,
+  	  bIndent
+  	 FROM
+  	 qna_a
+  	 ORDER BY bGroup DESC, bStep ASC
+  	
+  	</select>
+  	<insert id="qnaInsert">
+  	 INSERT INTO qna_a(qseq,subject,content,id,bgroup,bstep,bIndent)
+  		VALUES(qna_seq.nextval,#{subject},#{content}.#{id},#{bgroup},#{bstep},#{bIndent})
+  	</insert>
+  	<update id="qnaUpdate">
+  		UPDATE qna_a 
+  		SET bstep=bstep+1 
+  		WHERE bgroup=#{bgroup}
+  		AND
+  		bstep>#{bstep}
+  	</update>
+  	
+  	<update id="qnaUpdateContent">
+  		UPDATE qna_a
+  		SET content=#{content},
+  		subject=#{subject}
+  		WHERE qseq=#{qseq}
+  		
+  	</update>
+  	
+  	<delete id="qnaDel">
+  		DELETE FROM qna_a
+  		WHERE qseq=#{qseq}
+  	
+  	</delete>
+ 	
+ 	<select id="qnaDetail" resultType="com.spring.board.dvo.QnaVO">
+	  SELECT 
+  	  qseq,
+  	  subject,
+  	  content,
+  	  reply,
+  	  id,
+  	  rep,
+  	  indate,
+  	  bgroup,
+  	  bstep,
+  	  bIndent
+  	 FROM
+  	 qna_a
+  	 WHERE qseq=#{qseq}	
+ 	
+ 	</select>
+  
+  <insert id="qnaNewInsert">
+  <selectKey keyProperty="qseq" resultType="int" order="BEFORE">
+		    select qna_seq.nextval FROM DUAL
+		</selectKey>
+  	 INSERT INTO qna_a(qseq,subject,content,id,bgroup,bstep,bIndent)
+  		VALUES(#{qseq},#{subject},#{content}.#{id},#{qseq},0,0)
+  	</insert>
+  
+  
+  </mapper>
