@@ -11,4 +11,5 @@ public interface QnaService {
 	public void qnaUpdateContent(QnaVO vo);    
 	public void qnaDel(int qseq);            
 	public void qnaNewInsert(QnaVO vo);   
+	public void qnaDelAll(int p);
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,12 +32,14 @@ public class QnaController {
 	}
 	@RequestMapping(value="qnaInsert",method=RequestMethod.GET)
 	public String qnaInsertGet(@ModelAttribute("vo")QnaVO vo) {
-		return "/qna/qnaInsert";
+		
+		return "/qna/qnaWrite";
 	}
 	@RequestMapping(value="qnaInsert",method=RequestMethod.POST)
 	public String qnaInsertPost(RedirectAttributes rttr,QnaVO vo,HttpSession session) {
 		String userId=(String)session.getAttribute("userId");
 		vo.setId(userId);
+		
 		qnaService.qnaInsert(vo);
 		
 		rttr.addFlashAttribute("msg","success");
@@ -53,7 +56,7 @@ public class QnaController {
 	}
 	@RequestMapping("qnaDetail")
 	public String qnaDetail(int qseq,Model model) {
-		model.addAttribute(qnaService.qnaDetail(qseq));
+		model.addAttribute("vo",qnaService.qnaDetail(qseq));
 		
 		return "qna/qnaDetail";
 	}
@@ -69,9 +72,17 @@ public class QnaController {
 	public String qnaNewInsert(RedirectAttributes rttr,QnaVO vo,HttpSession session) {
 	String userId=(String)session.getAttribute("userId");
 	vo.setId(userId);
-	qnaService.qnaInsert(vo);
+	qnaService.qnaNewInsert(vo);
 	
 	return "redirect:/qna/qnaList";
 }
+	@RequestMapping("qnaDelAll")
+	public String qnaDelAll(@RequestParam("bGroup")int bGroup) {
+		System.out.println(bGroup);
+	qnaService.qnaDelAll(bGroup);
+	return "redirect:/qna/qnaList";
+	
+		
+	}
 	
 }

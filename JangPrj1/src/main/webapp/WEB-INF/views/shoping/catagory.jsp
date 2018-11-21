@@ -31,6 +31,7 @@
 				<h3>${vo.name}</h3>
 				<p>${vo.price2}</p>
 				<p>${vo.title}</p>
+				<p style="color: red;font-size: 18px;">♡:${vo.loveCh}</p>
 			</div>
 
 		</c:forEach>

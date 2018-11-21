@@ -55,4 +55,10 @@ public class QnaDAOImpl implements QnaDAO {
 		sqlSession.insert("qna.qnaNewInsert",vo);
 	}
 
+	@Override
+	public void qnaDelAll(int p) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("qna.qnaDelAll",p);
+	}
+
 }

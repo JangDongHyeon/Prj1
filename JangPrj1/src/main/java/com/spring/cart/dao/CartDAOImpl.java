@@ -31,4 +31,10 @@ public class CartDAOImpl implements CartDAO {
 		return sqlSession.insert("cart.cartInsert",vo);
 	}
 
+	@Override
+	public List<CartVO> cartSelPseq(String userId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("cart.cartSelPseq",userId);
+	}
+
 }

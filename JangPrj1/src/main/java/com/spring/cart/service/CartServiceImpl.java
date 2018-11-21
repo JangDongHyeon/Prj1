@@ -34,4 +34,10 @@ public class CartServiceImpl implements CartService {
 		return result==1?true:false;
 	}
 
+	@Override
+	public List<CartVO> cartSelPseq(String userId) {
+		// TODO Auto-generated method stub
+		return cartDAO.cartSelPseq(userId);
+	}
+
 }

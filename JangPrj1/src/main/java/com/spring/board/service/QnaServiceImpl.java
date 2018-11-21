@@ -23,7 +23,7 @@ public class QnaServiceImpl implements QnaService {
 		// TODO Auto-generated method stub
 		qnaDAO.qnaUpdate(vo);
 		vo.setbStep(vo.getbStep()+1);
-		vo.setbGroup(vo.getbIndent()+1);
+		vo.setbIndent(vo.getbIndent()+1);
 		qnaDAO.qnaInsert(vo);
 	}
 
@@ -50,6 +50,12 @@ public class QnaServiceImpl implements QnaService {
 	public void qnaNewInsert(QnaVO vo) {
 		// TODO Auto-generated method stub
 		qnaDAO.qnaNewInsert(vo);
+	}
+
+	@Override
+	public void qnaDelAll(int p) {
+		// TODO Auto-generated method stub
+		qnaDAO.qnaDelAll(p);
 	}
 
 }

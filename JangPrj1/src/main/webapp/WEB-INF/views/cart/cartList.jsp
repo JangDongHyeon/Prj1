@@ -36,6 +36,40 @@ $(document).ready(function(){
 	
 	
 	});
+	$("#buy").on("click",function(){
+		var vo="${list}";
+		var list = new Array();
+		
+		if(vo==='[]'){
+			alert("상품이없습니다");
+			return;
+		}
+	
+		<c:forEach items="${list}"  var="item">
+		list.push("${item}");
+		</c:forEach>  
+		
+		$.ajax({
+			url:'${path}/order/buyAll',
+			type:'post',
+			dataType: 'json' , 
+			  contentType: 'application/json; charset=UTF-8;',  
+			   data: JSON.stringify(list) ,
+
+
+		
+			success:function(data){
+				if(data==="success"){
+					location.href='${path}/order/mypage'
+				}
+			}
+		});
+		
+	/* 	var fromObj=$("form[name=formm]");
+		fromObj.attr("action","${path}/order/buyAll?list="+list);
+		fromObj.submit();
+		 */
+	});
 	
 });
 	
@@ -53,7 +87,7 @@ $(document).ready(function(){
  	    <c:otherwise>
 	      <table>
 	           <c:set var = "sum" value = "0" />
-
+			
 
 		    <tr align="center" style="font-size:15px;">
 		   <th>이미지</th><th>상품명</th><th>수량</th><th>가격</th><th>주문일</th><th>삭제</th>
@@ -67,7 +101,9 @@ $(document).ready(function(){
 		   	 <td>${vo.quantity}</td>
 		   	 <td><fmt:formatNumber value="${vo.price*vo.quantity}" var="price"
 					pattern="###,###,###" />${price}원</td>
-			 <c:set var="sum" value="${sum+vo.price*vo.quantity}"/>		
+			 <c:set var="sum" value="${sum+vo.price*vo.quantity}"/>	
+	
+			 	
 		   	 <td><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/> </td>
 		   	 <td><input type="checkbox" name="cseq" value="${vo.cseq}"></td>
 		    </tr>

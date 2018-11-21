@@ -15,7 +15,7 @@ public class ProductVO {
 	private String bestyn;
 	private Date indate;
 	private String title;
-	
+	private int loveCh;
 	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
@@ -23,6 +23,18 @@ public class ProductVO {
 	
 	
 	
+	public int getLoveCh() {
+		return loveCh;
+	}
+
+
+
+	public void setLoveCh(int loveCh) {
+		this.loveCh = loveCh;
+	}
+
+
+
 	public String getTitle() {
 		return title;
 	}

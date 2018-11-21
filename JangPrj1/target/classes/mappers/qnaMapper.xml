@@ -18,19 +18,20 @@
   	  bIndent
   	 FROM
   	 qna_a
+  	 WHERE id=#{id}
   	 ORDER BY bGroup DESC, bStep ASC
   	
   	</select>
   	<insert id="qnaInsert">
   	 INSERT INTO qna_a(qseq,subject,content,id,bgroup,bstep,bIndent)
-  		VALUES(qna_seq.nextval,#{subject},#{content}.#{id},#{bgroup},#{bstep},#{bIndent})
+  		VALUES(qna_seq.nextval,#{subject},#{content},#{id},#{bGroup},#{bStep},#{bIndent})
   	</insert>
   	<update id="qnaUpdate">
   		UPDATE qna_a 
   		SET bstep=bstep+1 
-  		WHERE bgroup=#{bgroup}
+  		WHERE bgroup=#{bGroup}
   		AND
-  		bstep>#{bstep}
+  		bstep &gt; #{bStep}
   	</update>
   	
   	<update id="qnaUpdateContent">
@@ -70,8 +71,13 @@
 		    select qna_seq.nextval FROM DUAL
 		</selectKey>
   	 INSERT INTO qna_a(qseq,subject,content,id,bgroup,bstep,bIndent)
-  		VALUES(#{qseq},#{subject},#{content}.#{id},#{qseq},0,0)
+  		VALUES(#{qseq},#{subject},#{content},#{id},#{qseq},0,0)
   	</insert>
   
+  <delete id="qnaDelAll">
+   DELETE FROM qna_a
+    WHERE bgroup=#{bgroup}
+  
+  </delete>
   
   </mapper>

@@ -5,13 +5,16 @@
 <%@include file="../include/sun_mypage.jsp"%>
 <script>
 $(document).ready(function(){
-	$("sub").on("click",function(){
-		var frmObj=$("form[name=formm]");
-		var vo='${vo}';
-		if(vo==='null')frmObj.attr("action","${path}/qna/qnaNewInsert");
+	$("form[name=formm]").submit(function() {
+		
+		var vo=$(this).find("input[name=bGroup]").val();
 	
+		if(vo==='0')$(this).attr("action","${path}/qna/qnaNewInsert");
+		
+		
 		frmObj.attr("method","post");
 		frmObj.submit(); 
+	
 	});
 });
 
@@ -28,7 +31,8 @@ $(document).ready(function(){
 <legend></legend>
 <label>Title</label>
 <input type="text" name="subject" size="77" ><br>
-<label>Content</label>
+
+<label>Content</label><br><br>
 <textarea rows="8" cols="65" name="content"></textarea><br>
 </fieldset>
 <div class="clear"></div>

@@ -6,12 +6,13 @@
 	<select id="bestItem"
 		resultType="com.spring.shoping.dvo.ProductVO">
 		SELECT
-		pseq,
+		p.pseq,
 		name,
 		price2,
-		image
-
-		FROM PRODUCT
+		image,
+		NVL(l.love_check,0) loveCh
+	
+		FROM PRODUCT p LEFT JOIN  pr_love l ON p.pseq=l.pseq
 		WHERE
 		bestyn='y'
 		AND
@@ -53,11 +54,12 @@
 	<select id="newItem"
 		resultType="com.spring.shoping.dvo.ProductVO">
 		SELECT
-		pseq,
+		p.pseq,
 		name,
 		price2,
-		image
-		FROM PRODUCT
+		image,
+		NVL(l.love_check,0) loveCh
+		FROM PRODUCT p LEFT JOIN  pr_love l ON p.pseq=l.pseq
 		WHERE
 		rownum &lt;=4
 		AND
@@ -89,7 +91,7 @@
 		resultType="com.spring.shoping.dvo.ProductVO">
 		<include refid="pageHeader" />
 		SELECT
-		pseq,
+		p.pseq,
 		name,
 		kind,
 		price1,
@@ -99,8 +101,9 @@
 		content,
 		indate,
 		useyn,
-		bestyn
-		FROM PRODUCT
+		bestyn,
+		NVL(l.love_check,0) loveCh
+		FROM PRODUCT p LEFT JOIN  pr_love l ON p.pseq=l.pseq
 		WHERE
 		kind=#{kind}
 		AND

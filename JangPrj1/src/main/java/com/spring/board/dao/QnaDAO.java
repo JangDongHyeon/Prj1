@@ -12,4 +12,5 @@ public interface QnaDAO {
 	public void qnaDel(int qseq);
 	public QnaVO qnaDetail(int qseq);
 	public void qnaNewInsert(QnaVO vo);
+	public void qnaDelAll(int p);
 }

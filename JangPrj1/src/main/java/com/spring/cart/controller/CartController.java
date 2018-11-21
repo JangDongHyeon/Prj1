@@ -33,7 +33,7 @@ public class CartController {
 	public String cartList(HttpSession session,Model model){
 		String userId=(String)session.getAttribute("userId");
 	
-		
+		//model.addAttribute("get",cartService.cartSelPseq(userId));
 		model.addAttribute("list",cartService.cartList(userId));
 		
 		return "cart/cartList";
@@ -58,7 +58,7 @@ public class CartController {
 		for(int i :checkVal) {
 		if(cartService.cartDelete(i)) {
 			msg="success";
-
+			
 		}
 		}
 		rttr.addFlashAttribute("msg",msg);

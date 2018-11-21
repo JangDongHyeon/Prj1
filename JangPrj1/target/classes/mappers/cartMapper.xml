@@ -26,5 +26,15 @@ FROM cart o INNER JOIN product p ON o.pseq=p.pseq AND result='1')
   	 (cseq,id,pseq,quantity,image)
   	VALUES(cart_seq.nextval,#{id},#{pseq},#{quantity},#{image})
   	</insert>
+  	
+  	<select id="cartSelPseq" resultType="com.spring.cart.dvo.CartVO">
+  	SELECT 
+  	 *
+  	FROM
+  	(SELECT o.pseq ,o.id FROM cart o INNER JOIN product p ON o.pseq=p.pseq AND result='1')
+  	WHERE
+  	 id=#{id}
+  	
+  	</select>
   
   </mapper>
