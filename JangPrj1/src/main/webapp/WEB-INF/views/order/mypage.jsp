@@ -4,7 +4,11 @@
 
 <%@include file="../include/sun_mypage.jsp"%>
 <script>
+if('${msg}'==="success"){
+	alert("구입완료");
+}
  $(document).ready(function(){
+	
 	 $("#show").on("click",function(){
 		 var frmObj=$("form[name=formm]");
 			frmObj.attr("action","${path}/shoping/catagory");
@@ -12,23 +16,8 @@
 			frmObj.submit(); 
 	 });
 	 
-	/*  $("#re").on("click",function(e){
-		 console.log(e);
-		  $.ajax({
-			type:"get",
-			url:'${path}/order/del/'+e,
-			dataType:'text',
-			success:function(data){
-				if(data==="success"){
-					alert("취소되었습니다");
-					window.location.reload();
-					 console.log(e);
-				}
-			}
-		 });
 
-	 }); */
-	 
+
 	 
  });
  function del(oseq){
@@ -36,15 +25,20 @@
 			type:"get",
 			url:'${path}/order/del/'+oseq,
 			dataType:'text',
-			success:function(data){
-				if(data==="success"){
+			success : function(data) {
+				console.log(data);
+				if($.trim(data)==="success"){
+					
 					alert("취소되었습니다");
-					window.location.reload();
+			
 					
 				}
+				
 			}
 		 });
+	
  }
+
 </script>
 	<article>
  <c:set var = "sum" value = "0" />
@@ -58,12 +52,12 @@
 	 	<table class="cartList">
 
 	 		<tr align="center" style="font-size:15px;">
-	 		<th>이미지</th><th>상품명</th><th>상품번호</th><th>상품갯수</th><th>이름</th><th>가격</th>
+	 		<th>이미지</th><th>상품명</th><th>상품번호</th><th>상품갯수</th><th>이름</th> <th>가격</th>
 	 		 <th>날짜</th><th>진행상황</th><th>취소</th>
 	 		</tr>
-	 		<c:forEach items="${list}" var="vo">
-	 		 <tr>
-	 		   <td>
+	  <c:forEach items="${list}" var="vo">
+	 		 <tr id="list_view">
+	 		    <td>
 	 		   <img width="100px" height="100px"
 					src="/resources/product_images/${vo.image}">					
 	 		   </td>
@@ -83,10 +77,10 @@
 						<td>처리완료</td>
 					</c:otherwise>
 				</c:choose>
-			   <td><button id="re" onclick="del('${vo.oseq}')">취소</button></td>
+			   <td><button id="re" onclick="del('${vo.oseq}')">취소</button></td> 
 	 		 </tr>
 	 		 
-	 		</c:forEach>
+	 </c:forEach> 
 	 	
  
 

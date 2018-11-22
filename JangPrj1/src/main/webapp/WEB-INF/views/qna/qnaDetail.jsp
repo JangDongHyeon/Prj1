@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@include file="../include/header.jsp"%>
 
-<%@include file="../include/sun_mypage.jsp"%>
+<%@include file="../include/sub_menu.jsp"%>
 <script>
 $(document).ready(function(){
 	$("#sub").on("click",function(){

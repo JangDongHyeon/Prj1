@@ -31,36 +31,47 @@ $(document).ready(function(){
 				window.location.reload();
 			}
 			
-		}
+		},
+		
 	});
 	
 	
 	});
 	$("#buy").on("click",function(){
 		var vo="${list}";
-		var list = new Array();
-		
+		var listPseq = new Array();
+		var listq=new Array();
+		var listc=new Array();
 		if(vo==='[]'){
 			alert("상품이없습니다");
 			return;
 		}
 	
 		<c:forEach items="${list}"  var="item">
-		list.push("${item}");
+		listPseq.push("${item.pseq}");
+		listq.push("${item.quantity}");
+		listc.push("${item.cseq}");
+		
 		</c:forEach>  
 		
 		$.ajax({
 			url:'${path}/order/buyAll',
 			type:'post',
-			dataType: 'json' , 
-			  contentType: 'application/json; charset=UTF-8;',  
-			   data: JSON.stringify(list) ,
+			dataType: 'text' , 
+			  
+			   data: {
+				   listPseq:listPseq,
+				   listq:listq,
+				   listc:listc
+			   } ,
 
 
 		
 			success:function(data){
-				if(data==="success"){
-					location.href='${path}/order/mypage'
+				if($.trim(data)==="success"){
+					alert("구매가 완료되었습니다");
+					
+					 location.href='${path}/order/mypage'
 				}
 			}
 		});

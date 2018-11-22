@@ -13,6 +13,11 @@
 				$("#idP").html("아이디를 입력하세요")
 				return;
 			}
+			if(formObj.getid.value==="false"){
+				$("#idP").html("중복된아이디 사용금지")
+				
+				return;
+			}
 			if (formObj.pwd.value === "") {
 				$("#pwdP").html("비밀번호를 입력하세요")
 				return;
@@ -79,9 +84,11 @@
 					
 						var a=$("getId").val();
 						console.log(a);
-					} else $("#idP").html("중복된 아이디가 있습니다");
-				}
-
+					} else {$("#idP").html("중복된 아이디가 있습니다");
+					$('input[name=getId]').attr('value','false');
+				
+					}
+			}
 			});
 
 		});

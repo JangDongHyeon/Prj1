@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8" />
 <nav id="sub_menu">
 	<ul>
 	  <li><a href="${path}/cart/cartList">CART</a></li>

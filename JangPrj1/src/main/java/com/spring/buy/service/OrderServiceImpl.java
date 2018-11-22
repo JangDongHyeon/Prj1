@@ -7,19 +7,24 @@ import org.springframework.stereotype.Service;
 
 import com.spring.buy.dao.BuyDAO;
 import com.spring.buy.dvo.OrderBuyVO;
+import com.spring.cart.dao.CartDAO;
+import com.spring.cart.dvo.CartVO;
 @Service
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private BuyDAO buyDAO;
-	
+	@Autowired
+	private CartDAO cartDAO;
 	@Override
-	public void orderIn(OrderBuyVO vo) {
+	public void orderIn(OrderBuyVO vo,int count) {
 		// TODO Auto-generated method stub
 		
 		if(buyDAO.orderIn(vo)){
 	
 		buyDAO.orderDetailIn(vo);
+		 
+		 cartDAO.cartDelete(count);
 		
 		}
 		
@@ -45,4 +50,17 @@ public class OrderServiceImpl implements OrderService {
 		return buyDAO.oderDel(oseq);
 	}
 
+	@Override
+	public void orderIn(OrderBuyVO vo) {
+		// TODO Auto-generated method stub
+		
+		if(buyDAO.orderIn(vo)){
+	
+		buyDAO.orderDetailIn(vo);
+			
+		
+	}
+
 }
+}
+

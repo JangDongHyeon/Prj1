@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.buy.dvo.OrderBuyVO;
 import com.spring.buy.service.OrderService;
+import com.spring.cart.dvo.CartVO;
 import com.spring.shoping.dvo.SearchVO;
 
 @Controller
@@ -36,11 +37,11 @@ public class OrderController {
 		String id=(String)session.getAttribute("userId");
 		
 		vo.setId(id);
-		
+	
 				orderService.orderIn(vo);
 			
 		
-		
+		rttr.addFlashAttribute("msg","success");
 		rttr.addFlashAttribute("searchIn",critia);
 		
 		return "redirect:/order/mypage";
@@ -49,19 +50,26 @@ public class OrderController {
 	@ResponseBody
 	public String orderBuyAll(HttpSession session,
 		@RequestParam(value = "kind", defaultValue = "0") String kind,
-		SearchVO critia,@RequestBody List<OrderBuyVO> list) {
-		System.out.println("1111");
-		String id=(String)session.getAttribute("userId");
-		
-		String msg="";
-
-		
-			for(OrderBuyVO i:list) {
-				i.setId(id);
-				orderService.orderIn(i);
-			msg="success";
+		SearchVO critia,@RequestParam(value="listPseq[]") List<Integer> listPseq,
+		@RequestParam(value="listq[]")List<Integer>listq,
+		@RequestParam(value="listc[]")List<Integer>listc) {
 	
+		String id=(String)session.getAttribute("userId");
+		OrderBuyVO vo=new OrderBuyVO();
+		int cseq;
+		String msg="";
+		vo.setId(id);
+		for(int i=0;i<listPseq.size();i++) {
+			vo.setPseq(listPseq.get(i));
+			vo.setQuantity(listq.get(i));
+			cseq=listc.get(i);
+			orderService.orderIn(vo,cseq);
+			msg="success";
 		}
+		
+			
+		
+	
 		
 	
 		
@@ -80,10 +88,22 @@ public class OrderController {
 		
 		
 	}
+	@RequestMapping("mypageJson")
+	@ResponseBody
+	public List<OrderBuyVO> orderMypageJson(Model model,HttpSession session,OrderBuyVO vo, @RequestParam(value = "kind", defaultValue = "0") String kind,
+			@ModelAttribute("searchIn") SearchVO critia) {
+		String id=(String)session.getAttribute("userId"); 
+		vo.setId(id);
+		
+		
+		return orderService.orderDetailSel(vo);
+		
+		
+	}
 	@RequestMapping("del/{oseq}")
 	@ResponseBody
 	public String orderDel(@PathVariable("oseq")int oseq) {
-		System.out.println("aaaaaaa");
+	
 		String msg="";
 
 		if(orderService.oderDel(oseq)) {

@@ -9,4 +9,5 @@ public interface OrderService {
 	 public boolean orderDetailIn(OrderBuyVO vo);
 	 public List<OrderBuyVO> orderDetailSel(OrderBuyVO vo);
 	 public boolean oderDel(int oseq);
+	 public void orderIn(OrderBuyVO vo,int count);
 }
