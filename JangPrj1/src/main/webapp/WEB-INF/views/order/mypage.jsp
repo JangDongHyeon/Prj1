@@ -41,14 +41,18 @@ if('${msg}'==="success"){
 
 </script>
 	<article>
+	
  <c:set var = "sum" value = "0" />
+ 
 	<h2 style="color: black;">주문 상세 조회</h2>
+	
 	 <form method="post" name="formm">
 	 	<input type="hidden" name="keyword" value="${searchIn.keyword}">
 			<input type="hidden" name="search" value="${searchIn.search}">
 			<input type="hidden" name="page" value="${searchIn.page}">
 			 <input	type="hidden" name="numPage" value="${searchIn.numPage}">
-	 		
+			<c:choose>
+	  <c:when test="${list.size()>0}"> 
 	 	<table class="cartList">
 
 	 		<tr align="center" style="font-size:15px;">
@@ -81,10 +85,14 @@ if('${msg}'==="success"){
 	 		 </tr>
 	 		 
 	 </c:forEach> 
-	 	
- 
+	
 
 </table>
+ 	</c:when>	
+	 	<c:otherwise>
+	 	등록된 상품이없습니다
+	 	</c:otherwise>
+ </c:choose>
 <div class="clear"></div>
 <div>
 <h3 style="font-size: 15px; ">총 액   <fmt:formatNumber value="${sum}" pattern="###,###,###" var="sumding"

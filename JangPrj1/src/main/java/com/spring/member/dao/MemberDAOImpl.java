@@ -40,4 +40,10 @@ public class MemberDAOImpl implements MemberDAO{
 		return (userId==1)?false:true;
 	}
 
+	@Override
+	public String findEmail(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.findEmail",email);
+	}
+
 }

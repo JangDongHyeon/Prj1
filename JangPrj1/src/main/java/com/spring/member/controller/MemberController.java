@@ -72,6 +72,13 @@ public class MemberController {
 		
 		
 	}
+	@RequestMapping(value="/memberEmFind/{email}")
+	@ResponseBody
+	public String memberEmFind(@PathVariable("email")String email) {
+		System.out.println(email);
+		System.out.println(membetService.findEmail(email));
+		return membetService.findEmail(email);
+	}
 	
 	@RequestMapping("logout")
 	public String logout(HttpSession session,Model model)throws Exception {

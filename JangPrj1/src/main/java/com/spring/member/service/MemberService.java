@@ -10,4 +10,5 @@ public interface MemberService {
 	public MemberVO getMember(MemberVO vo)throws Exception;
 	public void logout(HttpSession session)throws Exception;
 	public boolean checkId(String id)throws Exception;
+	public String findEmail(String email);
 }

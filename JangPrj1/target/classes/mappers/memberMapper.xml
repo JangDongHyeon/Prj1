@@ -36,5 +36,13 @@
   
   </select>
   
+  <select id="findEmail" resultType="String">
+    SELECT 
+     id
+    FROM member
+     WHERE
+    email=#{email}
+  
+  </select>
   
   </mapper>

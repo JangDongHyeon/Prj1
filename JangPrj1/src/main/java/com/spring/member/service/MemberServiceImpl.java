@@ -53,4 +53,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.checkId(id);
 	}
 
+	@Override
+	public String findEmail(String email) {
+		// TODO Auto-generated method stub
+		return memberDAO.findEmail(email);
+	}
+
 }
