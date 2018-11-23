@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	<select id="adminCheck" resultType="String">
+		SELECT
+		pwd
+		FROM
+		worker
+		WHERE id=#{id}
+
+	</select>
+
+	<select id="getAdmin" resultType="com.spring.admin.dvo.AdminVO">
+		SELECT
+		name,id
+		FROM
+		worker
+		WHERE id=#{id}
+
+	</select>
+
+	<select id="AdpageCount" resultType="int"
+		parameterType="java.util.Map">
+		SELECT
+		count(pseq)
+		FROM PRODUCT
+		WHERE
+		<include refid="search" />
+	</select>
+
+	<select id="AdproductList" resultType="com.spring.shoping.dvo.ProductVO">
+	<include refid="pageHeader" />
+		SELECT
+		  pseq, indate, name, price1, price2, useyn, bestyn
+		FROM  PRODUCT
+		WHERE
+		<include refid="search" />
+		ORDER BY pseq DESC
+		<include refid="pageFooter" />
+	</select>
+
+	<insert id="AdproductInsert">
+		INSERT INTO PRODUCT
+		 (pseq, kind, name, price1, price2, price3, content, image)
+		FROM
+		 VALUES(product_seq.nextval,#{kind},#{name},#{price1},#{price2},#{price3},#{content},#{image})
+	
+	</insert>
+
+	<sql id="pageHeader">
+		SELECT * FROM(
+		SELECT ROWNUM AS rn,A.*FROM(
+
+
+	</sql>
+	<sql id="pageFooter">
+		)A
+		)WHERE rn BETWEEN #{startPage} AND
+		#{endPage}
+
+	</sql>
+	<sql id="search">
+		name LIKE '%'||#{keyword}||'%'
+	</sql>
+
+</mapper>

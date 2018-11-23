@@ -1,7 +1,5 @@
 package com.spring.shoping.dvo;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 

@@ -52,6 +52,7 @@ $(document).ready(function(){
    <ul>
    	 <c:choose>
   		<c:when test="${sessionScope.userId==null}">
+  			<li><a href="${path}/admin/login">ADMIN</a></li>
   			<li><a href="${path}/member/login">LOGIN</a></li>
   			<li><a href="${path}/member/join">JOIN</a></li>
   		</c:when> 	 
