@@ -81,7 +81,8 @@
 		content,
 		indate,
 		useyn,
-		bestyn
+		bestyn,
+		DECODE(kind,0,'ALL',1,'Heels',2,'Boots',3,'Sandals',4,'Sneakers',5,'on Sale') as title
 		FROM PRODUCT
 		WHERE
 		pseq=#{pseq}
@@ -140,8 +141,8 @@
 	</sql>
 	<sql id="pageFooter">
 		)A
-		)WHERE rn BETWEEN #{pageVO.startPage} AND
-		#{pageVO.endPage}
+		)WHERE rn BETWEEN #{pageVO.startPageto} AND
+		#{pageVO.endPageto}
 
 	</sql>
 	<sql id="search">

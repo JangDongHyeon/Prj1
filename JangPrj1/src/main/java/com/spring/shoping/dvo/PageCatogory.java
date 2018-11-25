@@ -18,7 +18,8 @@ public class PageCatogory {
 	private boolean nextPage;
 	private boolean perPage;
 	private Critia critia;
-	
+	private int startPageto;
+	private int endPageto;
 	
 	
 	public Critia getCritia() {
@@ -31,7 +32,8 @@ public class PageCatogory {
 	public PageCatogory(Critia critia,int count) {
 		setCritia(critia);
 		setTotalPage(count);
-		
+		setStartPageto();
+		setEndPageto();
 		setBlock();
 		
 	}
@@ -119,5 +121,25 @@ public class PageCatogory {
 		}
 	}
 	
-	
+	public int getStartPageto() {
+		return startPageto;
+	}
+
+
+
+	public void setStartPageto() {
+		this.startPageto = (critia.getPage()-1)*critia.getNumPage()+1;
+	}
+
+
+
+	public int getEndPageto() {
+		return endPageto;
+	}
+
+
+
+	public void setEndPageto() {
+		this.endPageto = getStartPageto()+critia.getNumPage()-1;
+	}
 }

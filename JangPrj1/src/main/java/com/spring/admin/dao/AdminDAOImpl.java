@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.admin.dvo.AdminVO;
+import com.spring.admin.dvo.Critia;
+import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.shoping.dvo.ProductVO;
 
@@ -29,13 +31,13 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public int AdpageCount(SearchVO vo) {
+	public int AdpageCount(Critia vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("admin.AdpageCount",vo);
 	}
 
 	@Override
-	public List<ProductVO> AdproductList(SearchVO vo) {
+	public List<ProductVO> AdproductList(Critia vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("admin.AdproductList",vo);
 	}
@@ -45,6 +47,20 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		int result=sqlSession.insert("admin.AdproductInsert",vo);
 		return result==1?true:false;
+	}
+
+	@Override
+	public void AdProDelete(ProductVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("admin.AdProDelete",vo);
+		
+		
+	}
+
+	@Override
+	public void AdproductUpdate(ProductVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.update("admin.AdproductUpdate",vo);
 	}
 
 }

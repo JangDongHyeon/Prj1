@@ -6,7 +6,7 @@ public class SearchVO extends Critia {
 	
 	public SearchVO() {
 		// TODO Auto-generated constructor stub
-		this.search="al";
+		this.search="";
 		this.keyword="";
 	}
 	
@@ -20,6 +20,7 @@ public class SearchVO extends Critia {
 		return keyword;
 	}
 	public void setKeyword(String keyword) {
+		System.out.println(keyword);
 		this.keyword = keyword;
 	}
 	

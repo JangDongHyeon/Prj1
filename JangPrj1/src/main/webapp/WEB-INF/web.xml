@@ -25,10 +25,7 @@
 			<param-value>/WEB-INF/spring-config/dispatcher-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		<multipart-config>
-		 <location>C:\\</location>
-		</multipart-config>
-		
+	
 	</servlet>
 		
 	<servlet-mapping>

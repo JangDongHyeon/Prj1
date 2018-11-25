@@ -6,39 +6,48 @@ public class Critia {
 	private int numPage;
 	private int startPage;
 	private int endPage;
-	
-	public Critia() {
-		// TODO Auto-generated constructor stub
-		this.page=1;
-		this.numPage=5;
-		setStartPage();
-		setEndPage();
-		
-	}
-	
+	private int startPageto;
+	private int endPageto;
 	
 	
 	public int getStartPage() {
 		return startPage;
 	}
-
-
-
-	public void setStartPage() {
-		this.startPage = (this.page-1)*this.numPage+1;
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
 	}
-
-
-
 	public int getEndPage() {
 		return endPage;
 	}
-
-
-
-	public void setEndPage() {
-		this.endPage = this.startPage+this.numPage-1;
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
 	}
+	public int getStartPageto() {
+		return startPageto;
+	}
+	public void setStartPageto(int startPageto) {
+		this.startPageto = startPageto;
+	}
+	public int getEndPageto() {
+		return endPageto;
+	}
+	public void setEndPageto(int endPageto) {
+		this.endPageto = endPageto;
+	}
+	public Critia() {
+		// TODO Auto-generated constructor stub
+	this(1,5);
+		
+		
+		
+	}
+	public Critia(int page,int numPage) {
+		this.page=page;
+		this.numPage=numPage;
+	}
+	
+	
+
 
 
 
@@ -46,6 +55,7 @@ public class Critia {
 		return page;
 	}
 	public void setPage(int page) {
+
 		if(page<=0) {
 			this.page=1;
 			return;

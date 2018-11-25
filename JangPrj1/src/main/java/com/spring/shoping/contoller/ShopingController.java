@@ -87,6 +87,8 @@ public class ShopingController {
 			count = shopginService.pageCount(kind,critia);
 
 		PageCatogory curryPage = new PageCatogory(critia, count);
+		critia.setStartPageto(curryPage.getStartPageto());
+		critia.setEndPageto(curryPage.getEndPageto());
 
 		map.put("title", shopginService.catagoeyTitle(kind));
 		map.put("pageMaker", curryPage);

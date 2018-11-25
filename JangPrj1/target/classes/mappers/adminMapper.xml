@@ -43,11 +43,32 @@
 
 	<insert id="AdproductInsert">
 		INSERT INTO PRODUCT
-		 (pseq, kind, name, price1, price2, price3, content, image)
-		FROM
-		 VALUES(product_seq.nextval,#{kind},#{name},#{price1},#{price2},#{price3},#{content},#{image})
+		 (pseq, name, kind, price1, price2, price3, content, image)
+	
+		 VALUES(product_seq.nextval,#{name},#{kind},#{price1},#{price2},#{price3},#{content},#{image})
 	
 	</insert>
+	
+	<update id="AdproductUpdate">
+		UPDATE PRODUCT
+		SET 
+		name={name},
+		kind={kind},
+		price1={price1},
+		price2={price2},
+		price3={price3},
+		content={content},
+		image={image},
+		indate='sysdate'
+		WHERE pseq={pseq}
+	
+	</update>
+
+	<delete id="AdProDelete">
+		DELETE FROM PRODUCT
+		WHERE 
+		pseq=#{pseq}
+	</delete>
 
 	<sql id="pageHeader">
 		SELECT * FROM(
@@ -57,8 +78,8 @@
 	</sql>
 	<sql id="pageFooter">
 		)A
-		)WHERE rn BETWEEN #{startPage} AND
-		#{endPage}
+		)WHERE rn BETWEEN #{startPageto} AND
+		#{endPageto}
 
 	</sql>
 	<sql id="search">

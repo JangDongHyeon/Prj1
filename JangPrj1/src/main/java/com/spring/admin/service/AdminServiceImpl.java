@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.admin.dao.AdminDAO;
 import com.spring.admin.dvo.AdminVO;
+import com.spring.admin.dvo.Critia;
+import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.shoping.dvo.ProductVO;
 
@@ -39,13 +41,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int AdpageCount(SearchVO vo) {
+	public int AdpageCount(Critia vo) {
 		// TODO Auto-generated method stub
 		return admindao.AdpageCount(vo);
 	}
 
 	@Override
-	public List<ProductVO> AdproductList(SearchVO vo) {
+	public List<ProductVO> AdproductList(Critia vo) {
 		// TODO Auto-generated method stub
 		return admindao.AdproductList(vo);
 	}
@@ -54,6 +56,18 @@ public class AdminServiceImpl implements AdminService{
 	public boolean AdproductInsert(ProductVO vo) {
 		// TODO Auto-generated method stub
 		return admindao.AdproductInsert(vo);
+	}
+
+	@Override
+	public void AdProDelete(ProductVO vo) {
+		// TODO Auto-generated method stub
+		admindao.AdProDelete(vo);
+	}
+
+	@Override
+	public void AdproductUpdate(ProductVO vo) {
+		// TODO Auto-generated method stub
+		admindao.AdproductUpdate(vo);
 	}
 
 }

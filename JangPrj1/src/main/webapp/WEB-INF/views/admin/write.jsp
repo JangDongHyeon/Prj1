@@ -4,34 +4,62 @@
 <%@ include file="include/submenu.jsp"%>
 <script>
  $(document).ready(function(){
-	$("#save").on("click",function(){
-		var frm=$("form[name=frm]");
-		if(frm.name.value===""){
+	$("form[name=frm]").submit(function(e){
+		regNumber = /^[0-9]*$/;
+		var inputfile=$("input[name='uploadFile']");
+		var files=inputfile[0].files;
+	
+		
+		
+		
+		if($(this).find("input[name='name']").val()===""){
 			alert("상품명을 입력하세요");
-			return;
+			return false;
 		}
-		if(frm.price1.value===""){
+		if($(this).find("input[name='price1']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
 			alert("원가를 입력하세요");
-			return;
+			return false;
 		}
-		if(frm.price2.value===""){
+		if($(this).find("input[name='price2']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
 			alert("판매가를 입력하세요");
-			return;
+			return false;
 		}
-		if(frm.price3.value===""){
+		if($(this).find("input[name='price3']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
 			alert("마진를 입력하세요");
-			return;
+			return false;
 		}
-		if(frm.content.value===""){
+		if($(this).find("input[name='content']").val()===""){
 			alert("내용을 입력하세요");
-			return;
+			return false;
 		}
-		if(frm.image.value===""){
-			alert("이미지를 입력하세요");
-			return;
+		if(inputfile.val()===""){
+			alert("이미지를 업로드하세요");
+			return false;
 		}
+		if(!checkExtension(files[0].name,files[0].size)){
+			return false;
+		}
+		 frm.action='/admin/adminInsert';
+		frm.method='post';
+		
+		
 	});
  });
+ var regex=new RegExp("(.*?)\.(gif|jpg|jpeg)$");
+ var maxSize=5242880;
+function checkExtension(fileName,fileSize){
+
+	 if(fileSize>=maxSize){
+		 alert("파일  사이즈 초과");
+	 	return false;
+	 }
+	    if (!regex.test(fileName)) {
+	        alert("이미지 형식의 파일을 선택하십시오");
+	        return false;
+	    } 
+	    return true;
+ } 
+
 </script>
 
 
@@ -43,7 +71,7 @@
 				<th>상품분류</th>
 				<td colspan="5"><select name="kind">
 						<c:forEach varStatus="num" items="${kindList}" var="kind">
-							<option value="${num}">${kind}</option>
+							<option value="${num.count}">${kind}</option>
 						</c:forEach>
 				</select>
 			<tr>
@@ -52,7 +80,7 @@
 			</tr>
 			<tr>
 				<th>원가[A]</th>
-				<td width="70"><input type="text" name="price1" size="11"></td>
+				<td width="70"><input  type="text" name="price1" size="11"></td>
 				<th>판매가[B]</th>
 				<td width="70"><input type="text" name="price2" size="11"></td>
 				<th>[B-A]</th>
@@ -65,11 +93,11 @@
 			</tr>
 			<tr>
 				<th>상품이미지</th>
-				<td width="343" colspan="5"><input type="file" name="image">
+				<td width="343" colspan="5"><input type="file" name="uploadFile">
 				</td>
 			</tr>
 		</table>
-		<input class="btn" id="save" type="button" value="등록">
+		<input class="btn" id="save" type="submit" value="등록">
 		<input class="btn" type="button" value="취소">
 	</form>
 </article>

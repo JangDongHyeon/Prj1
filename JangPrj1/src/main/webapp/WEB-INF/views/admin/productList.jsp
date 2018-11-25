@@ -7,6 +7,14 @@ $(document).ready(function(){
 	$("input[name=btn_write]").on("click",function(){
 		location.href='/admin/adminInsert';
 	});
+	$("input[name='btn_search']").on("click",function(){
+		var keyword=$("input[name='keyword']").val();
+		location.href='/admin/productList?keyword='+keyword;
+	});
+	$("input[name='btn_total']").on("click",function(){
+		
+		location.href='/admin/productList';
+	});
 });
 
 </script>
@@ -18,7 +26,7 @@ $(document).ready(function(){
   <tr>
   <td width="642">
       상품명 
-     <input type="text" name="key">
+     <input type="text" name="keyword">
      <input class="btn" type="button" name="btn_search" value="검색">
      <input class="btn" type="button" name="btn_total" value="전체보기 ">
      <input class="btn" type="button" name="btn_write" value="상품등록">
@@ -42,7 +50,7 @@ $(document).ready(function(){
     <tr>
       <td height="23" align="center" >${vo.pseq}</td>
       <td style="text-align: left; padding-left: 50px; padding-right: 0px;">   
-        <a href="#">
+        <a href="/admin/adDetail${pageMaker.makeSearch(pageMaker.critia.page)}&pseq=${vo.pseq}">
     	 ${vo.name}     
    		</a>
    	  </td>

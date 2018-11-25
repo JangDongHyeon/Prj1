@@ -20,7 +20,8 @@ public class PageMaker {
 	private boolean nextPage;
 	private boolean perPage;
 	private Critia critia;
-	
+	private int startPageto;
+	private int endPageto;
 	
 	
 	public Critia getCritia() {
@@ -33,7 +34,8 @@ public class PageMaker {
 	public PageMaker(Critia critia,int count) {
 		setCritia(critia);
 		setTotalPage(count);
-		
+		setStartPageto();
+		setEndPageto();
 		setBlock();
 		
 	}
@@ -120,6 +122,26 @@ public class PageMaker {
 			// TODO: handle exception
 		}
 	}
-	
+	public int getStartPageto() {
+		return startPageto;
+	}
+
+
+
+	public void setStartPageto() {
+		this.startPageto = (critia.getPage()-1)*critia.getNumPage()+1;
+	}
+
+
+
+	public int getEndPageto() {
+		return endPageto;
+	}
+
+
+
+	public void setEndPageto() {
+		this.endPageto = getStartPageto()+critia.getNumPage()-1;
+	}
 	
 }
