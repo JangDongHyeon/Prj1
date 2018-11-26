@@ -10,7 +10,7 @@ public class MemberVO {
 	private String address;
 	private String phone;
 	private String useyn;
-	private Date date;
+	private Date indate;
 	
 	public MemberVO() {
 		// TODO Auto-generated constructor stub
@@ -72,18 +72,20 @@ public class MemberVO {
 		this.useyn = useyn;
 	}
 
-	public Date getDate() {
-		return date;
+
+
+	public Date getIndate() {
+		return indate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setIndate(Date indate) {
+		this.indate = indate;
 	}
 
 	@Override
 	public String toString() {
 		return "MemberVO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", address=" + address
-				+ ", phone=" + phone + ", useyn=" + useyn + ", date=" + date + "]";
+				+ ", phone=" + phone + ", useyn=" + useyn + ", indate=" + indate + "]";
 	}
 	
 }

@@ -3,14 +3,18 @@ package com.spring.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -26,7 +30,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.admin.dvo.AdminVO;
@@ -162,12 +168,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String adModifyPost(@ModelAttribute("searchIn")SearchVO searchVO,Model model,ProductVO vo,MultipartFile uploadFile) throws Exception {
-		if(uploadFile!=null) {
+	public String adModifyPost(@ModelAttribute("searchIn")SearchVO searchVO,Model model,ProductVO vo,MultipartFile uploadFile,
+			HttpServletRequest req) throws Exception {
+		
+		if(!uploadFile.isEmpty()) {
 			String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
-			File deleteFile=new File(uploadFolder,vo.getImage());
-			deleteFile.delete();
+			System.out.println("이미지 이름:"+uploadFolder+"\\"+vo.getImage());
 			
+			File deleteFile=new File(uploadFolder+"\\",URLDecoder.decode(vo.getImage(),"UTF-8"));
+			if(deleteFile.exists()) {
+			deleteFile.delete();
+			}else {
+				logger.info("=============================파일이없스비다");
+			}
 			logger.info(uploadFolder);
 			logger.info("===================");
 			logger.info("Upload file name:"+uploadFile.getOriginalFilename());
@@ -193,6 +206,31 @@ public class AdminController {
 		
 		return "redirect:/admin/ProModify"; 
 	}
+	//구입
+	@RequestMapping(value="orderList",method=RequestMethod.GET)
+	public String orderListGet(Model model,@RequestParam(value="keyword",defaultValue="")String id) {
+		
+		model.addAttribute("orderList",adminService.AdOrderList(id));
+		return "admin/orderList";
+	}
+	@RequestMapping(value="orderList",method=RequestMethod.POST)
+	@ResponseBody
+	public String orderListPost(@RequestParam("arrayList[]")int[] obseq) {
 	
+		String msg="";
+		for(int p:obseq) {
+		adminService.AdOrderUpdate(p);
+		msg="success";
+		}
+		return msg;	
+	}
+	
+	@RequestMapping("memberList")
+	public String memberList(@RequestParam(value="keyword",defaultValue="")String id,Model model) {
+		
+		model.addAttribute("memberVO",adminService.AdMemberList(id));
+		
+		return "admin/memberList";
+	}
 	
 }

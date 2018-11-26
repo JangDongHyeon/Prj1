@@ -33,6 +33,18 @@ $(document).ready(function(){
 		
 	
 	});
+	$('a[href="${path}/qna/qnaList"]').click(function(e){
+		e.preventDefault();
+		var userId='<%=(String)session.getAttribute("userId")%>'
+		if(userId==='null'){
+			alert("로그인을 해주세요");
+			return;
+		}
+		$(this).unbind("click");
+		
+	
+	});
+	
 });
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

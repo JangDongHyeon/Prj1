@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(){
 	$('#logout').on("click",function(){
-		location.href='admin/logout';
+		location.href='/admin/logout';
 	});
 });
 </script>

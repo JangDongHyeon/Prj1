@@ -7,31 +7,36 @@
 <head>
 <script>
 $(document).ready(function(){
-	$("#modify").on("click",function(){
-		regNumber = /^[0-9]*$/;
-		var frm=$("input[name=frm]");
-		if($(this).find("input[name='name']").val()===""){
+	$("#modifyA").on("click",function(){
+		var inputfile=$("input[name='uploadFile']");
+		var files=inputfile[0].files;
+		var regexNum=new RegExp("/^[0-9]*$/");
+		var frm=$("form[name='frm']");
+		if($(frm).find("input[name='name']").val()===""){
 			alert("상품명을 입력하세요");
 			return false;
 		}
-		if($(this).find("input[name='price1']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
-			alert("원가를 입력하세요");
+		if($(frm).find("input[name='price1']").val()===""||regexNum.test($(frm).find("input[name='price1']").val())){
+			alert("원가를 확인하세요");
 			return false;
 		}
-		if($(this).find("input[name='price2']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
-			alert("판매가를 입력하세요");
+		if($(frm).find("input[name='price2']").val()===""||regexNum.test($(frm).find("input[name='price2']").val())){
+			alert("판매가를 확인하세요");
 			return false;
 		}
-		if($(this).find("input[name='price3']").val()===""||regNumber.test($(this).find("input[name='price1']").val())){
-			alert("마진를 입력하세요");
+		if($(frm).find("input[name='price3']").val()===""||regexNum.test($(frm).find("input[name='price3']").val())){
+			alert("마진를 확인하세요");
 			return false;
 		}
-		if($(this).find("input[name='content']").val()===""){
+		if($(frm).find("input[name='content']").val()===""){
 			alert("내용을 입력하세요");
 			return false;
 		}
+		if(files[0]!==undefined){
+			
 		if(!checkExtension(files[0].name,files[0].size)){
 			return false;
+		}
 		}
 		 frm.action='/admin/modify';
 		frm.submit();
@@ -127,11 +132,11 @@ function checkExtension(fileName,fileSize){
 				<tr>
 					<th>상품이미지</th>
 					<td colspan="5"><img src="/resources/product_images/${productVO.image}"
-						width="200pt"> <br> <input type="file" name="upliadFile">
+						width="200pt"> <br> <input type="file" name="uploadFile">
 					</td>
 				</tr>
 			</table>
-			<input class="btn" id="modify" type="button" value="수정"> 
+			<input class="btn" id="modifyA" type="button" value="수정"> 
 			<input 	class="btn" type="button" value="취소">
 		</form>
 	</article>

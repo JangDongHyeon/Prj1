@@ -49,21 +49,59 @@
 	
 	</insert>
 	
+
+	
 	<update id="AdproductUpdate">
 		UPDATE PRODUCT
 		SET 
-		name={name},
-		kind={kind},
-		price1={price1},
-		price2={price2},
-		price3={price3},
-		content={content},
-		image={image},
-		indate='sysdate'
-		WHERE pseq={pseq}
+		name=#{name},
+		kind=#{kind},
+		price1=#{price1},
+		price2=#{price2},
+		price3=#{price3},
+		content=#{content},
+		image=#{image},
+		indate=sysdate
+		WHERE pseq=#{pseq}
 	
 	</update>
-
+	
+	<select id="AdOrderList" resultType="com.spring.buy.dvo.OrderBuyVO">
+	 SELECT 
+	  *
+	 FROM
+	 order_view 
+	 WHERE
+	  id LIKE '%'||#{id}||'%'
+	  ORDER BY result,oseq desc
+	</select>
+	
+	<select id="AdMemberList" resultType="com.spring.member.dvo.MemberVO">
+	  SELECT
+	   *
+	  FROM
+	  member
+	  WHERE
+	   id LIKE '%'||#{id}||'%'
+	  ORDER BY indate DESC
+	</select>
+	
+	<select id="AdQnaList">
+	 SELECT
+	  *
+	 FROM
+	 qna_a
+	 WHERE
+	 ORDER BY rep,indate DESC
+	</select>
+	
+	
+	<update id="AdOrderUpdate">
+	 UPDATE  order_detail 
+	  SET result='2'
+	  WHERE odseq=#{odseq}
+	</update>
+	
 	<delete id="AdProDelete">
 		DELETE FROM PRODUCT
 		WHERE 

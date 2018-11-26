@@ -10,6 +10,8 @@ import com.spring.admin.dvo.AdminVO;
 import com.spring.admin.dvo.Critia;
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
+import com.spring.buy.dvo.OrderBuyVO;
+import com.spring.member.dvo.MemberVO;
 import com.spring.shoping.dvo.ProductVO;
 
 @Repository
@@ -61,6 +63,24 @@ public class AdminDAOImpl implements AdminDAO {
 	public void AdproductUpdate(ProductVO vo) {
 		// TODO Auto-generated method stub
 		sqlSession.update("admin.AdproductUpdate",vo);
+	}
+
+	@Override
+	public List<OrderBuyVO> AdOrderList(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("admin.AdOrderList",id);
+	}
+
+	@Override
+	public void AdOrderUpdate(int odseq) {
+		// TODO Auto-generated method stub
+		sqlSession.update("admin.AdOrderUpdate",odseq);
+	}
+
+	@Override
+	public List<MemberVO> AdMemberList(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("admin.AdMemberList",id);
 	}
 
 }

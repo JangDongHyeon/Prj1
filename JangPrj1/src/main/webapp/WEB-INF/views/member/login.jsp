@@ -8,20 +8,21 @@
 		$("#btnLogin").on("click", function() {
 			$("#idP").empty()
 			$("#pwdP").empty();
-			var formObj = document.frm;
-			if (formObj.id.value === "") {
+			var formObj = $("form[name='frm']");			
+			if ($(formObj).find("input[name='id']").val()=== "") {
 
 				$("#idP").html("아이디를 입력하세요")
 				return;
-			}
-			if (formObj.pwd.value === "") {
+			} 
+			if ($(formObj).find("input[name='pwd']").val()=== "") {
 
 				$("#pwdP").html("비밀번호를 입력하세요")
 				return;
 			}
-			formObj.method = "post";
-			formObj.action = "${path}/member/login";
-			formObj.submit();
+			
+			$(formObj).attr("method","post");
+			$(formObj).attr("action","${path}/member/login").submit();
+		
 
 		});
 		$("#btnJoin").on("click", function() {
@@ -92,15 +93,16 @@
 
 <article>
 	<h1 style="color: black;">로그인</h1>
-	<form name="frm" method="post" action="">
+	<form name="frm" method="post">
 		<fieldset>
 
-			<label>아이디:</label> <input type="text" id="userId" name="id"
-				value="${id}"><span
-				style="color: red; font-size: 17px; margin-left: 20px;" id="idP"></span>
+			<label>아이디:</label> 
+			<input type="text" name="id" value="${id}">
+				<span style="color: red; font-size: 17px; margin-left: 20px;" id="idP"></span>
 			<legend></legend>
-			<label>비밀번호:</label> <input type="password" id="pwd" name="pwd"><span
-				id="pwdP" style="color: red; font-size: 17px; margin-left: 20px;"></span>
+			<label>비밀번호:</label> <input type="password"  name="pwd">
+			<span id="pwdP" style="color: red; font-size: 17px; margin-left: 20px;"></span>
+			
 		</fieldset>
 	</form>
 	<c:choose>
