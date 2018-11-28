@@ -8,6 +8,7 @@ import com.spring.admin.dvo.AdminVO;
 import com.spring.admin.dvo.Critia;
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
+import com.spring.board.dvo.QnaVO;
 import com.spring.buy.dvo.OrderBuyVO;
 import com.spring.member.dvo.MemberVO;
 import com.spring.shoping.dvo.ProductVO;
@@ -27,4 +28,7 @@ public interface AdminService {
 	 public void AdOrderUpdate(int obseq);
 	 //회원
 	 public List<MemberVO> AdMemberList(String id);
+	 //Qna
+	 public List<QnaVO> AdQnaList();
+	 public void adQnaUpdate(QnaVO vo);
 }

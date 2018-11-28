@@ -88,12 +88,25 @@ public class MemberController {
 		return membetService.findEmail(email);
 	}
 	
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session,Model model)throws Exception {
 		logger.info("logout.....called");
 		membetService.logout(session);
 		model.addAttribute("msg","logout");
 		return "member/login";
 	}
+	@RequestMapping(value="/memberModify",method=RequestMethod.GET)
+	public String modifyGet() {
+		
+		
+		return "member/memberModify";
+	}
+	@RequestMapping(value="/memberModify",method=RequestMethod.POST)
+	public String modifyPOST() {
+		
+		
+		return "member/memberModify";
+	}
+	
 	
 }

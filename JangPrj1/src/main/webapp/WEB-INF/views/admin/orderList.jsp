@@ -36,7 +36,7 @@ $(document).ready(function(){
 			success:function(data){
 				if(data==="success"){
 					alert("변경 되었습니다");
-					
+					self.location='/admin/orderList';
 				}
 			}
 		});

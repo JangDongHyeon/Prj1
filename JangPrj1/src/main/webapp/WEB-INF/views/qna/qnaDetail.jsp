@@ -42,7 +42,10 @@ $(document).ready(function(){
 <input type="text" name="subject" size="77" value="${vo.subject}" <c:out value="${sessionScope.userId eq vo.id ? '':'readonly' }"/>><br>
 <label>Content</label>
 <textarea rows="8" cols="65" name="content"  <c:out value="${sessionScope.userId eq vo.id ?'':'readonly' }"/>>${vo.content}</textarea><br>
-
+<c:if test='${vo.rep=="2"}'>
+<label>답변</label>
+<textarea rows="8" cols="65" readonly="readonly">${vo.reply}</textarea>
+</c:if>
 </fieldset>
 <div class="clear"></div>
 <div id="buttons" style="float:right">

@@ -78,7 +78,7 @@ if('${msg}'==="success"){
 						<td>처리중</td>
 					</c:when>
 					<c:otherwise>
-						<td>처리완료</td>
+						<td style="color:red;">처리완료</td>
 					</c:otherwise>
 				</c:choose>
 			   <td><button id="re" onclick="del('${vo.oseq}')">취소</button></td> 

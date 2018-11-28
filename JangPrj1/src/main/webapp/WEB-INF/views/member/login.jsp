@@ -8,7 +8,7 @@
 		$("#btnLogin").on("click", function() {
 			$("#idP").empty()
 			$("#pwdP").empty();
-			var formObj = $("form[name='frm']");			
+			var formObj = $("form[name='formm']");			
 			if ($(formObj).find("input[name='id']").val()=== "") {
 
 				$("#idP").html("아이디를 입력하세요")
@@ -93,7 +93,7 @@
 
 <article>
 	<h1 style="color: black;">로그인</h1>
-	<form name="frm" method="post">
+	<form name="formm" method="post">
 		<fieldset>
 
 			<label>아이디:</label> 

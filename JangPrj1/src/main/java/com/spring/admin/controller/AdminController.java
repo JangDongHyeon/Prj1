@@ -39,6 +39,8 @@ import com.spring.admin.dvo.AdminVO;
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.admin.service.AdminService;
+import com.spring.board.dvo.QnaVO;
+import com.spring.board.service.QnaService;
 import com.spring.shoping.contoller.ShopingController;
 import com.spring.shoping.dao.ShopingDAO;
 import com.spring.shoping.dvo.ProductVO;
@@ -52,7 +54,8 @@ public class AdminController {
 	private AdminService adminService;
 	@Autowired
 	private ShopingService shopingService;
-
+	@Autowired
+	private QnaService qnaService;
 	
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
@@ -225,12 +228,32 @@ public class AdminController {
 		return msg;	
 	}
 	
-	@RequestMapping("memberList")
+	@RequestMapping("/memberList")
 	public String memberList(@RequestParam(value="keyword",defaultValue="")String id,Model model) {
 		
 		model.addAttribute("memberVO",adminService.AdMemberList(id));
 		
 		return "admin/memberList";
+	}
+	
+	@RequestMapping("/adQnaList")
+	public String adQnaList(Model model) {
+		model.addAttribute("qnaList",adminService.AdQnaList());
+		return "admin/adQnaList";
+	}
+	@RequestMapping("/qnaDetail")
+	public String qnaDetail(Model model,@RequestParam("qseq")int qseq) {
+		model.addAttribute("qnaVO",qnaService.qnaDetail(qseq));
+		
+		return "admin/qnaDetail";
+	}
+	@RequestMapping("/adModifyQna")
+	public String adModifyQna(QnaVO vo) {
+		
+		adminService.adQnaUpdate(vo);
+		
+		return "redirect:/admin/adQnaList";
+		
 	}
 	
 }

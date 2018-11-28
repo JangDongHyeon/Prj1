@@ -86,15 +86,32 @@
 	  ORDER BY indate DESC
 	</select>
 	
-	<select id="AdQnaList">
-	 SELECT
-	  *
-	 FROM
-	 qna_a
-	 WHERE
+	<select id="AdQnaList" resultType="com.spring.board.dvo.QnaVO">
+	 SELECT 
+  	  qseq,
+  	  subject,
+  	  content,
+  	  reply,
+  	  id,
+  	  rep,
+  	  indate,
+  	  bgroup,
+  	  bstep,
+  	  bIndent
+  	 FROM
+  	 qna_a
 	 ORDER BY rep,indate DESC
 	</select>
 	
+	
+	<update id="adQnaUpdate">
+	 UPDATE qna_a 
+	 SET  
+	 rep='2',
+	 reply=#{reply}
+	 WHERE qseq=#{qseq}
+	
+	</update>
 	
 	<update id="AdOrderUpdate">
 	 UPDATE  order_detail 

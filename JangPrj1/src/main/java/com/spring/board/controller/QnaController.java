@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,6 +61,15 @@ public class QnaController {
 		
 		return "qna/qnaDetail";
 	}
+	@RequestMapping("qnaDetailJson")
+	@ResponseBody
+	public QnaVO qnaDetailJSON(@RequestParam("qseq")int qseq) {
+		
+		
+		return qnaService.qnaDetail(qseq);
+	}
+	
+	
 	@RequestMapping(value="qnaModify",method=RequestMethod.POST)
 	public String qnaModify(RedirectAttributes rttr,QnaVO vo) {
 		qnaService.qnaUpdateContent(vo);
