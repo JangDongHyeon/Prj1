@@ -86,7 +86,9 @@
 	  ORDER BY indate DESC
 	</select>
 	
-	<select id="AdQnaList" resultType="com.spring.board.dvo.QnaVO">
+	
+	
+	<select id="AdQnaList" resultType="com.spring.qna.dvo.QnaVO">
 	 SELECT 
   	  qseq,
   	  subject,

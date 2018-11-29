@@ -1,4 +1,4 @@
-package com.spring.board.controller;
+package com.spring.qna.controller;
 
 import java.util.List;
 
@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.board.dvo.QnaVO;
-import com.spring.board.service.QnaService;
+import com.spring.qna.dvo.QnaVO;
+import com.spring.qna.service.QnaService;
+
+
 
 @Controller
 @RequestMapping("/qna/*")
@@ -88,7 +90,7 @@ public class QnaController {
 }
 	@RequestMapping("qnaDelAll")
 	public String qnaDelAll(@RequestParam("bGroup")int bGroup) {
-		System.out.println(bGroup);
+	
 	qnaService.qnaDelAll(bGroup);
 	return "redirect:/qna/qnaList";
 	

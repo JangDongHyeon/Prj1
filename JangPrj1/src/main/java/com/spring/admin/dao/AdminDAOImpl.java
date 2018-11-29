@@ -10,9 +10,10 @@ import com.spring.admin.dvo.AdminVO;
 import com.spring.admin.dvo.Critia;
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
-import com.spring.board.dvo.QnaVO;
+
 import com.spring.buy.dvo.OrderBuyVO;
 import com.spring.member.dvo.MemberVO;
+import com.spring.qna.dvo.QnaVO;
 import com.spring.shoping.dvo.ProductVO;
 
 @Repository

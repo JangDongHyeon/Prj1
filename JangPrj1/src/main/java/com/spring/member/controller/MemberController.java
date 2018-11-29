@@ -88,6 +88,8 @@ public class MemberController {
 		return membetService.findEmail(email);
 	}
 	
+	
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session,Model model)throws Exception {
 		logger.info("logout.....called");
@@ -96,16 +98,19 @@ public class MemberController {
 		return "member/login";
 	}
 	@RequestMapping(value="/memberModify",method=RequestMethod.GET)
-	public String modifyGet() {
-		
-		
+	public String modifyGet(Model model,MemberVO vo) throws Exception {
+		model.addAttribute("vo",membetService.getMember(vo));
 		return "member/memberModify";
+		
 	}
 	@RequestMapping(value="/memberModify",method=RequestMethod.POST)
-	public String modifyPOST() {
+	public String modifyPOST(MemberVO vo,RedirectAttributes rttr) throws Exception {
+
 		
+		membetService.memberUpdate(vo);
+		rttr.addFlashAttribute("msg","수정완료");
+		return "redirect:/member/memberModify?id="+vo.getId();
 		
-		return "member/memberModify";
 	}
 	
 	

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="qna">
-  	<select id="qnaList" resultType="com.spring.board.dvo.QnaVO">
+  	<select id="qnaList" resultType="com.spring.qna.dvo.QnaVO">
   	 SELECT 
   	  qseq,
   	  subject,
@@ -48,7 +48,7 @@
   	
   	</delete>
  	
- 	<select id="qnaDetail" resultType="com.spring.board.dvo.QnaVO">
+ 	<select id="qnaDetail" resultType="com.spring.qna.dvo.QnaVO">
 	  SELECT 
   	  qseq,
   	  subject,

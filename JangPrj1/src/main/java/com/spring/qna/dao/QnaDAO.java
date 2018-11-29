@@ -1,8 +1,9 @@
-package com.spring.board.dao;
+package com.spring.qna.dao;
 
 import java.util.List;
 
-import com.spring.board.dvo.QnaVO;
+import com.spring.qna.dvo.QnaVO;
+
 
 public interface QnaDAO {
 	public List<QnaVO> qnaList(String userId);

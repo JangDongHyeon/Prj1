@@ -18,8 +18,6 @@
    FROM member
     WHERE
      id=#{id}
-	AND
-	 pwd=#{pwd}
    </select>
    <select id="join">
     INSERT INTO member
@@ -44,5 +42,15 @@
     email=#{email}
   
   </select>
+  
+  <update id="memberUpdate">
+	 UPDATE member
+	 SET pwd=#{pwd},
+	 name=#{name},
+	 address=#{address},
+	 email=#{email},
+	 phone=#{phone}
+	 WHERE id=#{id}
+	</update>
   
   </mapper>

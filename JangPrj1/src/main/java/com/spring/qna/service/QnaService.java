@@ -1,8 +1,10 @@
-package com.spring.board.service;
+package com.spring.qna.service;
 
 import java.util.List;
 
-import com.spring.board.dvo.QnaVO;
+import com.spring.qna.dvo.QnaVO;
+
+
 
 public interface QnaService {
 	public List<QnaVO> qnaList(String userId);              

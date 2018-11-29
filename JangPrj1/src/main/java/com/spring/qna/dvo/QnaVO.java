@@ -1,4 +1,4 @@
-package com.spring.board.dvo;
+package com.spring.qna.dvo;
 
 import java.util.Date;
 

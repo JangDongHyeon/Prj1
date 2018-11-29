@@ -1,61 +1,65 @@
-package com.spring.board.service;
+package com.spring.qna.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-import com.spring.board.dao.QnaDAO;
-import com.spring.board.dvo.QnaVO;
-@Service
-public class QnaServiceImpl implements QnaService {
+import com.spring.qna.dvo.QnaVO;
+
+@Repository
+public class QnaDAOImpl implements QnaDAO {
 
 	@Autowired
-	private QnaDAO qnaDAO;
+	private SqlSession sqlSession;
+	
 	@Override
 	public List<QnaVO> qnaList(String userId) {
 		// TODO Auto-generated method stub
-		return qnaDAO.qnaList(userId);
+		return sqlSession.selectList("qna.qnaList",userId);
 	}
 
 	@Override
 	public void qnaInsert(QnaVO vo) {
 		// TODO Auto-generated method stub
-		qnaDAO.qnaUpdate(vo);
-		vo.setbStep(vo.getbStep()+1);
-		vo.setbIndent(vo.getbIndent()+1);
-		qnaDAO.qnaInsert(vo);
+		sqlSession.insert("qna.qnaInsert",vo);
+	}
+
+	@Override
+	public void qnaUpdate(QnaVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.update("qna.qnaUpdate",vo);
 	}
 
 	@Override
 	public void qnaUpdateContent(QnaVO vo) {
 		// TODO Auto-generated method stub
-		qnaDAO.qnaUpdateContent(vo);
+		sqlSession.update("qna.qnaUpdateContent",vo);
 	}
 
 	@Override
 	public void qnaDel(int qseq) {
 		// TODO Auto-generated method stub
-		qnaDAO.qnaDel(qseq);
+		sqlSession.delete("qna.qnaDel",qseq);
 	}
 
 	@Override
 	public QnaVO qnaDetail(int qseq) {
 		// TODO Auto-generated method stub
-		return qnaDAO.qnaDetail(qseq);
-		
+		return sqlSession.selectOne("qna.qnaDetail",qseq);
 	}
 
 	@Override
 	public void qnaNewInsert(QnaVO vo) {
 		// TODO Auto-generated method stub
-		qnaDAO.qnaNewInsert(vo);
+		sqlSession.insert("qna.qnaNewInsert",vo);
 	}
 
 	@Override
 	public void qnaDelAll(int p) {
 		// TODO Auto-generated method stub
-		qnaDAO.qnaDelAll(p);
+		sqlSession.delete("qna.qnaDelAll",p);
 	}
 
 }

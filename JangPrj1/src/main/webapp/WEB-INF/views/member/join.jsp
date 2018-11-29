@@ -9,7 +9,7 @@
 			$("span").empty();
 			var regExpEmail= /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
-			var regExpPhone = /^\d{3}-\d{3,4}-\d{4}$/;
+			var regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
 			  var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
 			  var regName = /^[가-힣]{2,4}$/;
 
@@ -57,7 +57,7 @@
 			}
 			if (formObj.phone.value === ""||formObj.phone.value.match(regExpPhone)==null) {
 				$("#phoneP").html("휴대전화번호를 확인하세요");
-				formObj.phoneP.focus();
+				formObj.phone.focus();
 				return;
 			}
 			if (formObj.getId.value == "") {

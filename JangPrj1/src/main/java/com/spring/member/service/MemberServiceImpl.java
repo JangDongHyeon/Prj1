@@ -59,4 +59,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.findEmail(email);
 	}
 
+	@Override
+	public void memberUpdate(MemberVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		 memberDAO.memberUpdate(vo);
+	}
+
 }

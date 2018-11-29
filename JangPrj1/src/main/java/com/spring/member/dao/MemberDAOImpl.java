@@ -46,4 +46,11 @@ public class MemberDAOImpl implements MemberDAO{
 		return sqlSession.selectOne("member.findEmail",email);
 	}
 
+	@Override
+	public void memberUpdate(MemberVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		 
+		sqlSession.update("member.memberUpdate",vo);
+	}
+
 }
