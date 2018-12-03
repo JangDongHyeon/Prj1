@@ -20,7 +20,6 @@ public class SearchVO extends Critia {
 		return keyword;
 	}
 	public void setKeyword(String keyword) {
-		System.out.println(keyword);
 		this.keyword = keyword;
 	}
 	

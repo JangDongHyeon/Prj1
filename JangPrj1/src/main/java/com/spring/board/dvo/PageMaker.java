@@ -67,13 +67,14 @@ public class PageMaker {
 	}
 
 	public void setTotalPage(int count) {
-
+		
 		int total = count / critia.getNumPage();
-		if (totalPage % critia.getNumPage() > 0) {
+		if (total % critia.getNumPage() > 0) {
 			total++;
 		}
+		System.out.println("1111111111111111111111111111111asdadasd:"+total);
 		this.totalPage = total;
-
+	
 	}
 
 	public int getStartPage() {
@@ -126,7 +127,8 @@ public class PageMaker {
 
 	public String makeSearch(int page) {
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
-				.queryParam("numPage", critia.getNumPage()).queryParam("search", ((SearchVO) critia).getSearch())
+				.queryParam("numPage", critia.getNumPage())
+				.queryParam("search", ((SearchVO) critia).getSearch())
 				.queryParam("keyword", encoding(((SearchVO) critia).getKeyword())).build();
 		return uriComponents.toUriString();
 

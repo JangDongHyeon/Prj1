@@ -1,12 +1,14 @@
 package com.spring.board.dvo;
 
+import java.util.Date;
+
 public class BoardVO {
 	private int bno;
 	private String bid;
 	private String content;
 	private String subject;
-	private String indate;
-	private String updatedate;
+	private Date indate;
+	private Date updatedate;
 	private int cnt;
 	private int love;
 	public int getBno() {
@@ -33,16 +35,17 @@ public class BoardVO {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getIndate() {
+	
+	public Date getIndate() {
 		return indate;
 	}
-	public void setIndate(String indate) {
+	public void setIndate(Date indate) {
 		this.indate = indate;
 	}
-	public String getUpdatedate() {
+	public Date getUpdatedate() {
 		return updatedate;
 	}
-	public void setUpdatedate(String updatedate) {
+	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
 	}
 	public int getCnt() {

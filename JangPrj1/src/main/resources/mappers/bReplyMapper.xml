@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="breply">
+  <select id="bReplyList" parameterType="java.util.Map" resultType="com.spring.board.dvo.BReply">
+  <include refid="pageHeader" />
+  SELECT
+   r_no,
+   bno,
+   r_content,
+   r_id,
+   indate,
+   updatedate,
+    bgroup,
+  	  bstep,
+  	  bIndent
+  FROM
+   b_reply
+  WHERE
+   bno=#{bno}
+  ORDER BY bGroup DESC, bStep ASC
+  	<include refid="pageFooter"></include>
+  </select>
+  <insert id="breplyCreate">
+   INSERT INTO b_reply
+    (r_no,bno,r_content,r_id,bgroup,bstep,bIndent)
+   VALUES(seq_b_reply,#{bno},#{r_content},#{r_id},#{bGroup},#{bStep},#{bIndent})
+  
+  </insert>
+  <select id="breplyCount" resultType="int">
+  SELECT 
+   COUNT(r_no)
+  FROM
+   b_reply
+    WHERE
+   bno=#{bno}
+  </select>
+  
+  <update id="breplyUpdate">
+   UPDATE b_reply
+   SET
+    r_content=#{r_content},
+    r_id=#{r_id}
+   WHERE
+    r_no=#{r_no}
+  </update>
+  
+  <delete id="breplyDelete">
+   DELETE FROM
+    b_reply
+   WHERE r_no=#{r_no}
+  
+  </delete>
+  
+  <insert id="bReplyNewInsert">
+  <selectKey keyProperty="reply" resultType="int" order="BEFORE">
+		    select seq_b_reply FROM DUAL
+		</selectKey>
+  	 INSERT INTO b_reply(r_no,bno,r_content,r_id,bgroup,bstep,bIndent)
+  		VALUES(#{reply}#{bno},#{r_content},#{r_id},#{reply},0,0)
+  	</insert>
+  
+    	<update id="bReplyUpdateSt">
+  		UPDATE b_reply 
+  		SET bstep=bstep+1 
+  		WHERE bgroup=#{bGroup}
+  		AND
+  		bstep &gt; #{bStep}
+  	</update>
+  	
+	<sql id="pageHeader">
+		SELECT * FROM(
+		SELECT ROWNUM AS rn,A.*FROM(
+
+
+	</sql>
+	<sql id="pageFooter">
+		)A
+		)WHERE rn BETWEEN #{critia.startPage} AND
+		#{critia.endPage}
+
+	</sql>
+  </mapper>

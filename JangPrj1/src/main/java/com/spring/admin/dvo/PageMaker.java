@@ -58,7 +58,7 @@ public class PageMaker {
 	public void setTotalPage(int count) {
 		
 		int total=count/critia.getNumPage();
-		if(totalPage%critia.getNumPage()>0) {
+		if(total%critia.getNumPage()>0) {
 			total++;
 		}
 		this.totalPage=total;

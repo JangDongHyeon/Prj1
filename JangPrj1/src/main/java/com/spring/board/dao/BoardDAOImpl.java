@@ -23,7 +23,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int boardPageCount(SearchVO vo) {
 		// TODO Auto-generated method stub
-		return boardPageCount(vo);
+		return sqlSession.selectOne("board.boardPageCount",vo);
 	}
 
 	@Override

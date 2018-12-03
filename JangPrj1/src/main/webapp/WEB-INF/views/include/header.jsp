@@ -78,7 +78,7 @@ $(document).ready(function(){
    	  	<li><a href="${path}/cart/cartList">CART</a></li>
    	  	<li><a href="${path}/order/mypage">MY PAGE</a>
    	  	<li><a href="${path}/qna/qnaList">QNA</a>
-   	  	<li><a href="${path}/board/list.do">자유게시판</a>
+   	  	<li><a href="${path}/board/boardSelect">자유게시판</a>
    	</ul>
    </nav>
    
