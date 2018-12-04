@@ -280,7 +280,7 @@
 		<span style="padding-bottom: 10px; margin-bottom: 20px;">제목:${boardVO.subject}</span><br>
 		<div style="float: left; font-size: 17px; margin-top: 10px;">사용자:${boardVO.bid}</div>
 		<div style="float: left; font-size: 17px; margin-top: 10px;">
-			&nbsp;|&nbsp;시간:
+			&nbsp;&nbsp;시간:
 			<fmt:formatDate value="${boardVO.updatedate}"
 				pattern="yy-MM-dd HH:mm:ss" />
 		</div>

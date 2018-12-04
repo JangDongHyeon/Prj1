@@ -5,7 +5,7 @@
 <script>
  $(document).ready(function(){
 	$("form[name=frm]").submit(function(e){
-		regNumber = /^[0-9]*$/;
+		var regNumber=new RegExp("/^[0-9]*$/");
 		var inputfile=$("input[name='uploadFile']");
 		var files=inputfile[0].files;
 	
@@ -44,21 +44,50 @@
 		
 		
 	});
- });
- var regex=new RegExp("(.*?)\.(gif|jpg|jpeg)$");
- var maxSize=5242880;
-function checkExtension(fileName,fileSize){
+	
+	 var regex=new RegExp("(.*?)\.(gif|jpg|jpeg)$");
+	 var maxSize=5242880;
+	function checkExtension(fileName,fileSize){
 
-	 if(fileSize>=maxSize){
-		 alert("파일  사이즈 초과");
-	 	return false;
-	 }
-	    if (!regex.test(fileName)) {
-	        alert("이미지 형식의 파일을 선택하십시오");
-	        return false;
-	    } 
-	    return true;
- } 
+		 if(fileSize>=maxSize){
+			 alert("파일  사이즈 초과");
+		 	return false;
+		 }
+		    if (!regex.test(fileName)) {
+		        alert("이미지 형식의 파일을 선택하십시오");
+		        return false;
+		    } 
+		    return true;
+	 } 
+	
+	$("input[type=file]").change(function(e){
+		var formData=new FormData();
+		var inputFile=$("input[name='uploadFile']");
+		var files =inputFile[0].files;
+		
+		for(var i=0;i<files.length;i++){
+			if(!checkExtension(files[0].name,files[i].size)){
+				return false;
+			}
+		formData.append("uploadFile",files[i]);
+			
+			
+		}
+		$.ajax({
+			url:'/BFile/uploadAjaxFile',
+			processData:false,
+			contentType:false,
+			data:formData,
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+			}
+		});
+	});
+	
+ });
+
 
 </script>
 

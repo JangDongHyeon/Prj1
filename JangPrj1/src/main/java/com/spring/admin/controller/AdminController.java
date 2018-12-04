@@ -1,5 +1,6 @@
 package com.spring.admin.controller;
 
+import java.awt.PageAttributes.MediaType;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,12 +111,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/adminInsert",method=RequestMethod.POST)
-	public String amdinInsertPOST(MultipartFile uploadFile ,ProductVO vo,RedirectAttributes rttr) {
+	public String amdinInsertPOST(MultipartFile uploadFile ,ProductVO vo,RedirectAttributes rttr,HttpServletRequest request) {
 		
-		String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
+		//String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
 	
 		
-		logger.info(uploadFolder);
+	
 		logger.info("===================");
 		logger.info("Upload file name:"+uploadFile.getOriginalFilename());
 		logger.info("upload file size:"+uploadFile.getSize());
@@ -124,7 +125,7 @@ public class AdminController {
 		logger.info("only file name: "+uploadFileName);
 		UUID uuid=UUID.randomUUID();
 		uploadFileName=uuid.toString()+"_"+uploadFileName;
-		
+		String uploadFolder=getRootPath(request);
 		
 		File saveFile=new File(uploadFolder,uploadFileName);
 		
@@ -207,7 +208,7 @@ public class AdminController {
 		adminService.AdproductUpdate(vo);
 		
 		
-		return "redirect:/admin/ProModify"; 
+		return "redirect:/admin/modify?pseq="+vo.getPseq(); 
 	}
 	//구입
 	@RequestMapping(value="orderList",method=RequestMethod.GET)
@@ -253,6 +254,11 @@ public class AdminController {
 		adminService.adQnaUpdate(vo);
 		
 		return "redirect:/admin/adQnaList";
+		
+	}
+	public String getRootPath(HttpServletRequest request) {
+		String rootPatha="/resources/product_images";
+		return request.getSession().getServletContext().getRealPath(rootPatha);
 		
 	}
 	
