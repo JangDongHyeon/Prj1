@@ -1,6 +1,8 @@
 package com.spring.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,16 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardVO boardDetail(int bno) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.boardDetail",bno);
+	}
+
+	@Override
+	public void updateReplyCnt(int bno, int result) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map=new HashMap<>();
+		map.put("bno",bno);
+		map.put("result",result);
+		
+		sqlSession.update("board.updateReplyCnt",map);
 	}
 
 }

@@ -56,7 +56,9 @@ $(document).ready(function(){
 			<c:forEach items="${map.boardList}" var="vo">
 			  <tr>
 			   <td>${vo.bno}</td>
-			   <td width="230px;"><a href="${path}/board/boardDetail${map.pageMaker.makeSearch(map.pageMaker.critia.page)}&bno=${vo.bno}">${vo.subject}</a></td>
+			   <td width="230px;"><a href="${path}/board/boardDetail${map.pageMaker.makeSearch(map.pageMaker.critia.page)}&bno=${vo.bno}">${vo.subject}</a>
+			   (${vo.replycnt})
+			   </td>
 			   <td>${vo.bid}</td>
 			   <td>${vo.cnt}</td>
 			   <td><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/>

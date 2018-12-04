@@ -19,12 +19,13 @@ import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.board.dao.BoardDAO;
 import com.spring.board.dvo.BoardVO;
+import com.spring.board.service.BoardService;
 
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardService boardDAO;
 	
 	@RequestMapping("/boardSelect")
 	public String boardSelect(Model model,@ModelAttribute("searchVO")SearchVO vo) {
@@ -42,8 +43,8 @@ public class BoardController {
 		return "board/boardList";
 	}
 	@RequestMapping(value="boardInsert",method=RequestMethod.GET)
-	public String boardInsertGET(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO) {
-		model.addAttribute("boardVO",boardDAO.boardDetail(bno));
+	public String boardInsertGET(Model model,@ModelAttribute("searchVO")SearchVO searchVO) {
+	
 		return "board/boardInsert";
 	}
 	
@@ -58,15 +59,15 @@ public class BoardController {
 		return "redirect:/board/boardSelect";
 	}
 	@RequestMapping("/boardDetail")
-	public String boardDetail(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO) {
+	public String boardDetail(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO,HttpSession session) {
 		
-		model.addAttribute("boardVO",boardDAO.boardDetail(bno));
+		model.addAttribute("boardVO",boardDAO.boardDetail(bno, session));
 		return "board/boardDetail";
 	}
 	
 	@RequestMapping(value="boardUpdate",method=RequestMethod.GET)
-	public String boardUpdateGET(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO) {
-		model.addAttribute("list",boardDAO.boardDetail(bno));
+	public String boardUpdateGET(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO,HttpSession session) {
+		model.addAttribute("list",boardDAO.boardDetail(bno,session));
 		return "board/boardUpdate";
 	}
 	@RequestMapping(value="boardUpdate",method=RequestMethod.POST)
@@ -78,7 +79,7 @@ public class BoardController {
 	}
 	@RequestMapping("/boardDelete")
 	public String boardDelete(@RequestParam("bno")int bno,RedirectAttributes rttr,@ModelAttribute("searchVO")SearchVO searchVO) {
-		if(boardDAO.boardDelete(bno))
+		boardDAO.boardDelete(bno);
 			rttr.addFlashAttribute("msg","글이 삭제되었습니다");
 		return "redirect:/board/boardSelect";	
 	}

@@ -4,9 +4,9 @@
 
 <%@include file="../include/sub_menu.jsp"%>
 <script>
-	$(document).ready(
-			function() {
-				getReplyList();
+	$(document).ready(function() {
+		var replyPageNum=1;
+				getReplyList(replyPageNum);
 				$("#loveChk").on("click", function() {
 
 				});
@@ -53,40 +53,204 @@
 							if(data==="success"){
 								alert("댓글이 등록 완료!!");
 							}
-							getReplyList();
+							getReplyList(replyPageNum);
 							content.val("");
 						}
 					
 						
 						
 					});
-					$("#replyLi").find("li").html(str);
+					
 				});
+				
+				$("form[name=formm]").submit(function() {
+					var r_no=$("input[name='r_no']").val();
+					var r_content=$("#reContent").val();
+					var userId='<%=(String) session.getAttribute("userId")%>';
+					var modal = document.getElementById('myModal');
+				
+					$.ajax({
+						type:'post',
+						url:'${path}/bReply/replyUpdate',
+						headers:{
+							"Content-Type" : "application/json;charset=UTF-8"
+						},
+						dataType : "text",
+						data : JSON.stringify({
+							r_content : r_content,
+							r_no : r_no,
+							r_id:userId
+						}),
+						success:function(data){
+							if(data==="success"){
+								alert("수정완료");
+								modal.style.display = "none";
+								getReplyList(replyPageNum);
+							}
+						}
+					});
+					
+					
+					
+					
+				});
+				
+				$("#r_delete").on("click",function(){
+					var modal = document.getElementById('myModal');
+					var rno=$("input[name='r_no']").val();
+					$.ajax({
+						type:'get',
+						url:'${path}/bReply/replyDelete/'+rno,
+						dataType : "text",
+						success:function(data){
+							if($.trim(data)==="success"){
+								alert("삭제완료");
+								modal.style.display = "none";
+								getReplyList(replyPageNum);
+							}
+						}
+						
+						
+					});
+				});
+				
+				$("#replyId").on("click",".replyCl #reinser",function(){
+					var modal = document.getElementById('mymol');
+					var bGroup=$(this).parent().find("input[name='bGroup']").val();
+					var bIndent=$(this).parent().find("input[name='bIndent']").val();
+					var bStep=$(this).parent().find("input[name='bStep']").val();
+					
+					$("#bG").val(bGroup);
+					$("#bI").val(bIndent);
+					$("#bS").val(bStep);
+					
+					modal.style.display = "block";
+					
+				});
+				$("#replyId").on("click",".replyCl #reModify",function(){
+					var modal = document.getElementById('myModal');
+					var r_no = $(this).parent().find("input[name='r_no']").val();
+					var content = $(this).parent().find(".replyText").text();
+					
+					$("#modalRno").val(r_no);
+					$("#reContent").val(content);
+					
+					modal.style.display = "block";
+				});
+				
+				$("#close").on("click",function(){
+					var modal = document.getElementById('myModal');					
+					modal.style.display = "none";
+				});
+				
+				$("#rclose").on("click",function(){
+					var modal = document.getElementById('mymol');					
+					modal.style.display = "none";
+				});
+				
+				$("#r_Inbtn").on("click",function() {
+					var modal = document.getElementById('mymol');
+					var bGroup=$("#bG").val();
+					var bIndent=$("#bI").val();
+					var bStep=$("#bS").val();
+					var rcontent=$("#re_rContent");
+					var r_content=$("rcontent").val();
+					var bno=$("input[name='bno']").val();
+					var userId='<%=(String) session.getAttribute("userId")%>';
+					$.ajax({
+						type:'post',
+						url:"${path}/bReply/replyInsert/"+bno,
+						headers:{
+							"Content-type":"application/json",
+							
+						},
+						dataType:"text",
+						data:JSON.stringify({
+							bGroup:bGroup,
+							bIndent:bIndent,
+							bStep:bStep,
+							r_id:userId,
+							r_content:r_content
+							
+						}),
+						success:function(data){
+							if(data==="success"){
+								alert("댓글이 등록 완료!!");
+							}
+							getReplyList(replyPageNum);
+							rcontent.val("");
+						}
+						
+					})
+					
+					
+				});
+				
+				$(".pageTe").on("click","li a",function(event){
+					event.preventDefault();
+					replyPageNum=$(this).attr("href");
+					getReplyList(replyPageNum);
+				});
+			
+				
 				
 				
 			});
-	function getReplyList(){
+	function getReplyList(page){
 		var bno=$("input[name='bno']").val();		
-		$.getJSON("/bReply/replyList/"+bno,function(data){
+		$.getJSON("/bReply/replyList/"+bno+"/"+page,function(data){
+			var userId='<%=(String) session.getAttribute("userId")%>';
+			
 			var str="";
 			$(data.boardList).each(function(){
-				str += "<li><p>";if(this.bIndent>0){
-				for(var i=0;i<this.bIndent;i++){str+="&nbsp; &nbsp;&nbsp;"}};
+				str += "<li><p class='replyCl'>";if(this.bIndent>0){
+				for(var i=0;i<this.bIndent;i++){str+="<span>RE</span>"}};
 			 	str += "<input type=hidden name=r_no value="+this.r_no+">";
-				str += "아이디:&nbsp;" + this.r_id + "<br>";
-				str += "내용:&nbsp;<span style='font-size: 15px;'>" +this.r_content	+ "</span><br>";
+			 	str +="<input type=hidden name=bGroup value="+this.bGroup+">";
+			 	str +="<input type=hidden name=bIndent value="+this.bIndent+">";
+			 	str +="<input type=hidden name=bStep value="+this.bStep+">";
+				str += "아이디:&nbsp;<span style='font-size: 15px;'>" + this.r_id + "</span><br>";
+				str += "내용:&nbsp;<span style='font-size: 15px;'class='replyText'>" +this.r_content	+ "</span><br>";
 				str += "날짜:&nbsp;" + cangeDate(this.updatedate);
 				if (userId === this.r_id) {
-				str += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"
-					+ "<button id='reModify'>수정</button>&nbsp;<button id='reDelete'>삭제</button>"+
-					"<button id='reinser'>댓글달기</button>"	
+				str += "&emsp;&emsp;"
+					+ "<button id='reModify'>수정</button>&nbsp;";
+					
+				}
+				if(userId!=='null'){
+					str += "&emsp;";
+					str+="<button id='reinser'>댓글달기</button>";
 				}
 				str += "</p></li>";
 				str += "<hr>";
+			
 			});
 			
+			$("#replyLi").find("ul").html(str);
+			printPagenum(data.pageMaker)
 		});
 	}
+	function printPagenum(pageMaker){
+		var str="";
+		if(pageMaker.perPage){
+		str+="<li style=float:left;><a href='"+(pageMaker.startBlock-1)+"'>이전</a></li>";	
+		}
+	for(var i=pageMaker.startBlock,len=pageMaker.endBlock;i<=len;i++){
+		if(pageMaker.critia.page==i){
+			str+="<li style=float:left;><span style=color: red;>"+i+"</span></li>";
+		}else
+			str+="<li style=float:left;><a href='"+i+"'>"+i+"</a></li>";
+	}
+	if(pageMaker.nextPage&&pageMaker.endBlock>0){
+		str+="<li style=float:left;><a href='"+(pageMaker.endBlock+1)+"'>다음</a></li>";	
+		
+	}
+	
+		$(".pageA").find("ul").html(str);
+		
+	}
+	
+	
 	function cangeDate(date) {
 		data = new Date(parseInt(date));
 		year = data.getFullYear();
@@ -120,7 +284,7 @@
 			<fmt:formatDate value="${boardVO.updatedate}"
 				pattern="yy-MM-dd HH:mm:ss" />
 		</div>
-		<div style="float: right; font-size: 17px; margin-top: 10px;">&nbsp;|&nbsp;조회${boardVO.cnt}</div>
+		<div style="float: right; font-size: 17px; margin-top: 10px;">&nbsp;s&nbsp;조회${boardVO.cnt}</div>
 		<div style="float: right; font-size: 17px; margin-top: 10px;">&nbsp;&nbsp;추천${boardVO.love}</div>
 		<%--   <p style="float: right: ;">조회${boardVO.cnt}</p> --%>
 
@@ -138,17 +302,55 @@
 	</div>
 	<h2 align="center" style="color: black;">댓글</h2>
 	<div id="replyLi">
-		<ul style="list-style: none;">
-			
+		<ul style="list-style: none;" id="replyId">
+
 		</ul>
+		
 		<c:if test="${sessionScope.userId!=null}">
-			<label>댓글 내용</label>
+			<div align="center">
+			댓글 내용
 			<input type="text" name="r_content" id="replyContent">
 			<button type="button" id="replyIn">댓글 입력</button>
+			</div>
 		</c:if>
 
 	</div>
+	<div class="pageA" align="center">
+	 <ul style="list-style:none; margin:1px;" class="pageTe">
+	
+	 </ul>
+	</div>
 </article>
+
+
+
+<div id="myModal" class="modal">
+
+	<div class="modal-content">
+		<form method="post" name="formm">
+
+			<input type="hidden" name="r_no" id="modalRno"> 내용:<input
+				type="text" name="r_content" id="reContent"> <br> <input
+				type="submit" value="수정">
+			<button type="button" id="r_delete">삭제</button>
+			<button type="button" id="close">닫기</button>
+		</form>
+	</div>
+</div>
+
+<div id="mymol" class="modal">
+
+	<div class="modal-content">
+		<form name="frrm">
+			<input type="hidden" name="bGroup" id="bG"> <input
+				type="hidden" name="bIndent" id="bI"> <input type="hidden"
+				name="bStep" id="bS"> 내용:<input type="text" name="r_content"
+				id="re_rContent"> <br>
+			<button id="r_Inbtn">등록</button>
+			<button type="button" id="rclose">닫기</button>
+		</form>
+	</div>
+</div>
 
 
 <%@include file="../include/footer.jsp"%>

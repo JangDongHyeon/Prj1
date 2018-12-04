@@ -14,13 +14,22 @@
 	  indate,
 	  updatedate,
 	  cnt,
-	  love
+	  love,
+	  reply_cnt as replycnt
 	FROM
 	 board_a
 	<include refid="search"/>
 		ORDER BY bno DESC
 		<include refid="pageFooter"></include>
 	</select>
+	
+	<update id="updateReplyCnt" parameterType="java.util.Map">
+	UPDATE board_a
+	SET
+	 reply_cnt=reply_cnt+#{result}
+	WHERE
+	 bno=#{bno}
+	</update>
 	
 	<select id="boardPageCount" resultType="int">
 	 SELECT

@@ -9,7 +9,7 @@ public interface BReplyService {
 	List<BReply> bReplyList(int bno,Critia critia);
 	boolean breplyCreate(BReply replyVO);
 	boolean breplyUpdate(BReply replyVO);
-	boolean breplyDelete(int r_no);
+	void breplyDelete(int r_no);
 	void bReplyNewInsert(BReply replyVO);
-	int breplyCount();
+	int breplyCount(int bno);
 }

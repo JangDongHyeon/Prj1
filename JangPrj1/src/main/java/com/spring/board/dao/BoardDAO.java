@@ -14,6 +14,7 @@ public interface BoardDAO {
 	public void boardCntUp(int bno);
 	public boolean boardDelete(int bno);
 	public BoardVO boardDetail(int bno);
+	public void updateReplyCnt(int bno,int result);
 	
 	
 	

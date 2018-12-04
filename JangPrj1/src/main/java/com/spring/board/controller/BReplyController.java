@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.admin.dvo.Critia;
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.board.dvo.BReply;
@@ -29,28 +30,30 @@ public class BReplyController {
 	private BReplyService replyService;
 	
 	
-	@RequestMapping(value="replyList/{bno}")
-	public Map<String, Object> replyList(@RequestBody SearchVO searchVO,@PathVariable("bno")int bno){
+	@RequestMapping(value="replyList/{bno}/{page}",method=RequestMethod.GET)
+	public Map<String, Object> replyList(@PathVariable("bno")int bno,@PathVariable("page")int page){
 		
-		int count=replyService.breplyCount();
-		System.out.println(count);
-		searchVO.setNumPage(10);
-		PageMaker maker=new PageMaker(searchVO, count);
+		int count=replyService.breplyCount(bno);
+		Critia critia=new Critia();
+		critia.setPage(page);
+		critia.setNumPage(10);
+		PageMaker maker=new PageMaker(critia, count);
 		
-		searchVO.setStartPage(maker.getStartPageto());
-		searchVO.setEndPage(maker.getEndPageto());
+		critia.setStartPage(maker.getStartPageto());
+		critia.setEndPage(maker.getEndPageto());
 		Map<String, Object> map=new HashMap<>();
-		map.put("boardList",replyService.bReplyList(bno, searchVO));
+		map.put("boardList",replyService.bReplyList(bno, critia));
 		map.put("pageMaker",maker);
 		
 		
 		return map;
 	}
 	
-	@RequestMapping(value="replyInsert",method=RequestMethod.POST)
-	public String replyInsert(@RequestBody BReply bReply,HttpSession session) {
+	@RequestMapping(value="replyInsert/{bno}",method=RequestMethod.POST)
+	public String replyInsert(@PathVariable("bno")int bno,@RequestBody BReply bReply,HttpSession session) {
 		String userId=(String)session.getAttribute("userId");
 		bReply.setR_id(userId);
+		bReply.setBno(bno);
 		if(replyService.breplyCreate(bReply))
 			return "success";
 		else
@@ -73,10 +76,9 @@ public class BReplyController {
 	}
 	@RequestMapping("replyDelete/{rno}")
 	public String replyDelete(@PathVariable("rno")int rno) {
-		if(replyService.breplyDelete(rno))
+		replyService.breplyDelete(rno);
 			return "success";
-		else
-			return "fail";
+		
 	}
 	
 	

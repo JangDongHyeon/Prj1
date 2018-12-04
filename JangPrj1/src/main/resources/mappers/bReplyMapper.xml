@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="breply">
   <select id="bReplyList" parameterType="java.util.Map" resultType="com.spring.board.dvo.BReply">
-  <include refid="pageHeader" />
+<include refid="pageHeader"></include>
   SELECT
    r_no,
    bno,
@@ -20,7 +20,7 @@
   WHERE
    bno=#{bno}
   ORDER BY bGroup DESC, bStep ASC
-  	<include refid="pageFooter"></include>
+  <include refid="pageFooter"></include>
   </select>
   <insert id="breplyCreate">
    INSERT INTO b_reply
@@ -28,6 +28,15 @@
    VALUES(seq_b_reply,#{bno},#{r_content},#{r_id},#{bGroup},#{bStep},#{bIndent})
   
   </insert>
+  
+  <select id="getBoardNo" resultType="int">
+   SELECT
+    bno
+   FROM b_reply
+   WHERE r_no=#{r_no}
+  
+  </select>
+  
   <select id="breplyCount" resultType="int">
   SELECT 
    COUNT(r_no)
@@ -54,11 +63,11 @@
   </delete>
   
   <insert id="bReplyNewInsert">
-  <selectKey keyProperty="reply" resultType="int" order="BEFORE">
-		    select seq_b_reply FROM DUAL
+  <selectKey keyProperty="r_no" resultType="int" order="BEFORE">
+		    select seq_b_reply.NEXTVAL FROM DUAL
 		</selectKey>
   	 INSERT INTO b_reply(r_no,bno,r_content,r_id,bgroup,bstep,bIndent)
-  		VALUES(#{reply}#{bno},#{r_content},#{r_id},#{reply},0,0)
+  		VALUES(#{r_no},#{bno},#{r_content},#{r_id},#{r_no},0,0)
   	</insert>
   
     	<update id="bReplyUpdateSt">

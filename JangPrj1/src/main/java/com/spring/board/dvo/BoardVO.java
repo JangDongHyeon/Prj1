@@ -11,6 +11,15 @@ public class BoardVO {
 	private Date updatedate;
 	private int cnt;
 	private int love;
+	private int replycnt;
+	
+	
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public int getBno() {
 		return bno;
 	}

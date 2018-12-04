@@ -62,9 +62,15 @@ public class BReplyImpl implements BRplyDAO {
 	}
 
 	@Override
-	public int breplyCount() {
+	public int breplyCount(int bno) {
 	
-		return sqlSession.selectOne("breply.breplyCount");
+		return sqlSession.selectOne("breply.breplyCount",bno);
+	}
+
+	@Override
+	public int getBoardNo(int r_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("breply.getBoardNo",r_no);
 	}
 
 }

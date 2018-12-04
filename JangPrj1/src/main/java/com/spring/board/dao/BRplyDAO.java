@@ -12,5 +12,7 @@ public interface BRplyDAO {
 	boolean breplyDelete(int r_no);
 	void bReplyNewInsert(BReply replyVO);
 	void bReplyUpdateSt(BReply replyVO);
-	int breplyCount();
+	int breplyCount(int bno);
+	int getBoardNo(int r_no);
+	
 }

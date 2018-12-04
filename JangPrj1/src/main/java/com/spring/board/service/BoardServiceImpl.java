@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.admin.dvo.SearchVO;
 import com.spring.board.dao.BoardDAO;
@@ -48,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDAO.boardDelete(bno);
 	}
-
+	@Transactional
 	@Override
 	public BoardVO boardDetail(int bno,HttpSession session) {
 		// TODO Auto-generated method stub
