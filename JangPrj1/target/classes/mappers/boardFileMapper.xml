@@ -44,4 +44,3 @@ WHERE uuid=#{uuid}
 </select>
 
 </mapper>
-

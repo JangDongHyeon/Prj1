@@ -9,6 +9,16 @@ public class BoardFileVO {
 	private int bno;
 	private String filetype;
 	private Date reg_data;
+	private boolean image;
+	
+	
+	
+	public boolean isImage() {
+		return image;
+	}
+	public void setImage(boolean image) {
+		this.image = image;
+	}
 	public String getUuid() {
 		return uuid;
 	}

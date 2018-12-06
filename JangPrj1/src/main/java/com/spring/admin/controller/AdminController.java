@@ -126,7 +126,6 @@ public class AdminController {
 		UUID uuid=UUID.randomUUID();
 		uploadFileName=uuid.toString()+"_"+uploadFileName;
 		String uploadFolder=getRootPath(request);
-		
 		File saveFile=new File(uploadFolder,uploadFileName);
 		
 		try {
