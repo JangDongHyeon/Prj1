@@ -52,7 +52,7 @@ public class BoardController {
 	public String boardInsertPOST(BoardVO vo,RedirectAttributes rttr,HttpSession session,@ModelAttribute("searchVO")SearchVO searchVO) {
 		String id=(String)session.getAttribute("userId");
 		vo.setBid(id);
-		if(boardDAO.boardInsert(vo))
+		boardDAO.boardInsert(vo);
 		rttr.addFlashAttribute("msg","글이등록되었습니다");
 	
 		

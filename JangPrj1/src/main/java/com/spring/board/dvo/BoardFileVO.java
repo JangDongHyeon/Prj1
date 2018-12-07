@@ -5,7 +5,7 @@ import java.util.Date;
 public class BoardFileVO {
 	private String uuid;
 	private String uploadPath;
-	private String filename;
+	private String fileName;
 	private int bno;
 	private String filetype;
 	private Date reg_data;
@@ -31,11 +31,11 @@ public class BoardFileVO {
 	public void setUploadPath(String uploadPath) {
 		this.uploadPath = uploadPath;
 	}
-	public String getFilename() {
-		return filename;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public int getBno() {
 		return bno;

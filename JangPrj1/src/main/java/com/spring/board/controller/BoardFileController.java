@@ -3,6 +3,7 @@ package com.spring.board.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,14 +59,13 @@ public class BoardFileController {
 			
 			uploadFileName=uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			logger.info("only file name: " + uploadFileName);
-			vo.setFilename(uploadFileName);
+			vo.setFileName(uploadFileName);
 			
 			UUID uuid=UUID.randomUUID();
 			
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 			
 			try {
-				System.out.println(uploadPath.toString());
 				File saveFile=new File(uploadPath, uploadFileName);
 				
 				multi.transferTo(saveFile);
@@ -101,9 +101,10 @@ public class BoardFileController {
 	public ResponseEntity<byte[]> getFile(String fileName,HttpServletRequest request) {
 
 		logger.info("fileName: " + fileName);
+
 		String uploadFilePath=getRootPath(request);
 		File file = new File(uploadFilePath+"\\" + fileName);
-
+		
 		logger.info("file: " + file);
 
 		ResponseEntity<byte[]> result = null;
@@ -118,6 +119,36 @@ public class BoardFileController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	@RequestMapping(value="deleteFile",method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteFile(@RequestParam("fileName")String fileName,@RequestParam("type")String type,HttpServletRequest request) {
+		logger.info("fileName:  "+fileName);
+
+		
+		File file;
+		
+		try {
+			String uploadFilePath=getRootPath(request);
+			file=new File(uploadFilePath+"//"+URLDecoder.decode(fileName,"UTF-8"));
+			
+			file.delete();
+			
+			if(type.equals("image")) {
+				
+				String largeFileName = file.getAbsolutePath().replace("s_", "");
+
+				logger.info("largeFileName: " + largeFileName);
+
+				file = new File(largeFileName);
+
+				file.delete();
+			}
+			
+		} catch (Exception e) {e.printStackTrace();
+			// TODO: handle exception
+		}
+		return "deleted";
 	}
 	
 	

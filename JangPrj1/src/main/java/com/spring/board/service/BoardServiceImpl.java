@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.admin.dvo.SearchVO;
 import com.spring.board.dao.BoardDAO;
+import com.spring.board.dao.BoardFileDAO;
+import com.spring.board.dvo.BoardFileVO;
 import com.spring.board.dvo.BoardVO;
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDAO boardDAO;
+	@Autowired
+	private BoardFileDAO boardFileDAO;
 	
 	@Override
 	public List<BoardVO> boardSelect(SearchVO vo) {
@@ -30,12 +34,21 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDAO.boardPageCount(vo);
 	}
-
+	@Transactional
 	@Override
-	public boolean boardInsert(BoardVO vo) {
+	public void boardInsert(BoardVO vo) {
 		// TODO Auto-generated method stub
+		boardDAO.boardInsert(vo);
 		
-		return boardDAO.boardInsert(vo);
+		if(vo.getBoardFileList()==null||vo.getBoardFileList().size()<=0) {
+			return;
+		}
+		for(BoardFileVO v:vo.getBoardFileList()) {
+			v.setBno(vo.getBno());
+			boardFileDAO.insert(v);
+		}
+		
+	
 	}
 
 	@Override

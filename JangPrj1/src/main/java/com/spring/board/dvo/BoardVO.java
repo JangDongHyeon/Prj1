@@ -1,6 +1,7 @@
 package com.spring.board.dvo;
 
 import java.util.Date;
+import java.util.List;
 
 public class BoardVO {
 	private int bno;
@@ -13,7 +14,16 @@ public class BoardVO {
 	private int love;
 	private int replycnt;
 	
+	private List<BoardFileVO> boardFileList;
 	
+	
+	
+	public List<BoardFileVO> getBoardFileList() {
+		return boardFileList;
+	}
+	public void setBoardFileList(List<BoardFileVO> boardFileList) {
+		this.boardFileList = boardFileList;
+	}
 	public int getReplycnt() {
 		return replycnt;
 	}

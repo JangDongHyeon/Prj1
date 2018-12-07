@@ -10,7 +10,7 @@ import com.spring.board.dvo.BoardVO;
 public interface BoardService {
 	public List<BoardVO> boardSelect(SearchVO vo);
 	public int boardPageCount(SearchVO vo);
-	public boolean boardInsert(BoardVO vo);
+	public void boardInsert(BoardVO vo);
 	public boolean boardUpdate(BoardVO vo);
 	public boolean boardDelete(int bno);
 	public BoardVO boardDetail(int bno,HttpSession session);

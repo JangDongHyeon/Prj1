@@ -40,7 +40,14 @@
 	</select>
 	
 	<insert id="boardInsert">
-		INSERT INTO (bno,bid,content,subject) VALUES(board_seq_bno,#{bid},#{content},#{subject})
+	
+		<selectKey keyProperty="bno" order="BEFORE"
+			resultType="int">
+			select board_seq_bno.nextval from dual
+		</selectKey>
+		
+	
+		INSERT INTO board_a(bno,bid,content,subject) VALUES(#{bno},#{bid},#{content},#{subject})
 	
 	</insert>
 	

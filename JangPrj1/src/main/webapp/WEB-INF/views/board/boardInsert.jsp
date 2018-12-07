@@ -24,6 +24,10 @@
 .uploadResult ul li img {
 	width: 100px;
 }
+.uploadResult span {
+	font-size: 14px;
+	color:white;
+}
 </style>
 <script>
 $(document).ready(function(){
@@ -32,6 +36,30 @@ $(document).ready(function(){
 	$("input[type='submit']").on("click",function(e){
 		e.preventDefault();
 		
+		if($(frm).find("input[name='subject']")===""){
+			alert("제목을 입력하세요");
+			return;
+		}
+		
+		if($(frm).find("input[name='content']")===""){
+			alert("내용을 입력하세요");
+			return;
+		}
+		
+		
+		
+		var str="";
+		
+		$(".uploadResult ul li").each(function(i,obj){
+			var jobj=$(obj);
+			
+			str+="<input type='hidden' name='boardFileList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+			str+="<input type='hidden' name='boardFileList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+			str+="<input type='hidden' name='boardFileList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+			str+="<input type='hidden' name='boardFileList["+i+"].filetype' value='"+jobj.data("type")+"'>";
+			
+		});
+		frm.append(str).submit();
 		
 	});
 	$("input[type='file']").change(function(e){
@@ -85,22 +113,24 @@ function showUploadResult(uploadReArr){
 	var str="";
 	
 	$(uploadReArr).each(function(i,obj){
-		
 		if(obj.image){
-			var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
-			str+="<li><div>";
+			var fileCallPath =  encodeURIComponent(obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+			str += "<li data-path='"+obj.uploadPath+"'";
+			str +=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'"
+			str +" ><div>";
 			str+="<span>"+obj.fileName+"</span>";
-			str+="<button type='button' name='bu'>삭제</button><br>";
+			str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='image'>X</button><br><br>";
 			str+="<img src='/BFile/display?fileName="+fileCallPath+"'>";
 			str+="</div>";
 			str+="</li>";
 		}else{
-			var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName)
+			var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/"+obj.uuid +"_"+obj.fileName)
 			 var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 			
-			str+="<li><div>";
-			str+="<span>"+obj.fileName+"</span>";
-			str+="<button type='button' name='bu'>삭제</button><br>";
+			str += "<li "
+				str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
+			str+="<span>"+obj.fileName+"</span> &nbsp;&nbsp;";
+			str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' >X</button><br><br>";
 			str+="<img src='/resources/images/attach.png'></a>";
 			str+="</div>";
 			str+="</li>";
@@ -112,6 +142,23 @@ function showUploadResult(uploadReArr){
 	uploadUL.append(str);
 }
 $(".uploadResult").on("click","button",function(e){
+	
+	var targetFile=$(this).data("file");
+	var type=$(this).data("type");
+
+	
+	var targetLi=$(this).closest("li");
+	
+	$.ajax({
+		url:"/BFile/deleteFile",
+		data:{fileName:targetFile,type:type},
+		dataType:'text',
+		type:'post',
+		success:function(result){
+			alert(result);
+			targetLi.remove();
+		}
+	});
 	
 });
 

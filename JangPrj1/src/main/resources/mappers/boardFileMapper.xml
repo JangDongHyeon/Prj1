@@ -8,7 +8,7 @@
  (
  	uuid,
  	uploadPath,
- 	filename,
+ 	fileName,
  	bno,
  	filetype	
  )
@@ -16,7 +16,7 @@
  (
  	#{uuid},
  	#{uploadPath},
- 	#{filename},
+ 	#{fileName},
  	#{bno},
  	#{filetype}
  	
@@ -33,7 +33,7 @@ WHERE uuid=#{uuid}
  SELECT 
  	uuid,
  	uploadPath,
- 	filename,
+ 	fileName,
  	bno,
  	filetype,
  	reg_data
