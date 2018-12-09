@@ -17,9 +17,12 @@ $(document).ready(function(){
 		var userId='<%=(String)session.getAttribute("userId")%>'
 		if(userId==='null'){
 			alert("로그인을 해주세요");
+			self.location='${path}/member/login';
 			return;
 		}
-		$(this).unbind("click");
+		self.location='${path}/cart/cartList';
+		
+		
 	
 	});
 	$('a[href="${path}/order/mypage"]').click(function(e){
@@ -27,9 +30,10 @@ $(document).ready(function(){
 		var userId='<%=(String)session.getAttribute("userId")%>'
 		if(userId==='null'){
 			alert("로그인을 해주세요");
+			self.location='${path}/member/login';
 			return;
 		}
-		$(this).unbind("click");
+		self.location='${path}/order/mypage';
 		
 	
 	});
@@ -38,9 +42,10 @@ $(document).ready(function(){
 		var userId='<%=(String)session.getAttribute("userId")%>'
 		if(userId==='null'){
 			alert("로그인을 해주세요");
+			self.location='${path}/member/login';
 			return;
 		}
-		$(this).unbind("click");
+		self.location='${path}/qna/qnaList';
 		
 	
 	});

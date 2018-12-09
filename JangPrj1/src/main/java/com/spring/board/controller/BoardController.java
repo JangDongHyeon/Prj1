@@ -2,22 +2,26 @@ package com.spring.board.controller;
 
 import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.admin.dvo.PageMaker;
 import com.spring.admin.dvo.SearchVO;
 import com.spring.board.dao.BoardDAO;
+import com.spring.board.dvo.BoardFileVO;
 import com.spring.board.dvo.BoardVO;
 import com.spring.board.service.BoardService;
 
@@ -84,7 +88,12 @@ public class BoardController {
 		return "redirect:/board/boardSelect";	
 	}
 	
-	
+	@RequestMapping(value="/getBoardFileList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<BoardFileVO> getBoardFileList(@RequestParam("bno")int bno){
+		
+		return boardDAO.getBoardFileList(bno);
+	}
 	
 	
 	

@@ -28,7 +28,7 @@ public class BoardFileDAOImpl implements BoardFileDAO {
 	@Override
 	public List<BoardFileVO> fileByBno(int bno) {
 		// TODO Auto-generated method stub
-		return sqlsession.selectList("bFile.findByBno");
+		return sqlsession.selectList("bFile.findByBno",bno);
 	}
 
 }

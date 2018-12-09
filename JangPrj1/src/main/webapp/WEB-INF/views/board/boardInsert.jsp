@@ -62,6 +62,7 @@ $(document).ready(function(){
 		frm.append(str).submit();
 		
 	});
+	
 	$("input[type='file']").change(function(e){
 
 	    var formData = new FormData();
@@ -78,6 +79,7 @@ $(document).ready(function(){
 	      formData.append("uploadFile", files[i]);
 	      
 	    }
+	    
 	$.ajax({
 		url:'/BFile/uploadAjaxFile',
 		 processData: false, 

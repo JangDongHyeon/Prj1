@@ -3,8 +3,57 @@
 <%@include file="../include/header.jsp"%>
 
 <%@include file="../include/sub_menu.jsp"%>
+<style>
+.uploadResult {
+  width:100%;
+  background-color: pink;
+}
+.uploadResult ul{
+  display:flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+.uploadResult ul li {
+  list-style: none;
+  padding: 10px;
+  align-content: center;
+  text-align: center;
+}
+.uploadResult ul li img{
+  width: 100px;
+}
+.uploadResult ul li span {
+  color:white;
+}
+.bigPictureWrapper {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top:0%;
+  width:100%;
+  height:100%;
+  background-color: gray; 
+  z-index: 100;
+  background:rgba(255,255,255,0.5);
+}
+.bigPicture {
+  position: relative;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigPicture img {
+  width:600px;
+}
+
+</style>
 <script>
 	$(document).ready(function() {
+		getBoardFileList();
+		
 		var replyPageNum=1;
 				getReplyList(replyPageNum);
 				$("#loveChk").on("click", function() {
@@ -264,6 +313,37 @@
 		return strDate;
 
 	}
+	function getBoardFileList(){
+		var bno='${boardVO.bno}';
+		var iomg=$("#iomg");
+		$.getJSON("/board/getBoardFileList",{bno:bno},function(arr){
+			var str="";
+			var strI="";
+			$(arr).each(function(i,data){
+			
+				if(data.filetype=='true'){
+			           var fileCallPath =  encodeURIComponent( data.uploadPath+ "/s_"+data.uuid +"_"+data.fileName);
+			           var fileCallPathImg =  encodeURIComponent( data.uploadPath+ "/"+data.uuid +"_"+data.fileName);
+			       
+			           str += "<li data-path='"+data.uploadPath+"' data-uuid='"+data.uuid+"' data-filename='"+data.fileName+"' data-filetype='"+data.filetype+"' ><div>";
+			           str += "<img src='${path}/BFile/display?fileName="+fileCallPath+"'>";
+			           str += "</div>";
+			           str +"</li>";
+			        
+				}else{
+		             
+			           str += "<li data-path='"+data.uploadPath+"' data-uuid='"+data.uuid+"' data-filename='"+data.fileName+"' data-filetype='"+data.filetype+"'><div>";
+			           str += "<span style='font-size:15px; color:black;'> "+ data.fileName+"</span><br/>";
+			           str += "<img src='/resources/images/attach.png'></a>";
+			           str += "</div>";
+			           str +"</li>";
+			         }
+			});
+		      $(".uploadResult ul").html(str);
+		});
+		
+		
+	}
 	
 </script>
 <form name="frm" method="get">
@@ -291,6 +371,7 @@
 	</div>
 	<hr>
 	<div style="height: 400px; width: 100%; font-size: 13px;">
+	<img id="iomg">
 		${boardVO.content}</div>
 	<hr>
 	<div>
@@ -300,6 +381,20 @@
 		<button style="margin: 0" class="submit" id="b_list">리스트</button>
 
 	</div>
+	
+	<div class='bigPictureWrapper'>
+  <div class='bigPicture'>
+  </div>
+</div>
+<div class="uploadResult">
+ <ul>
+ 
+ </ul>
+</div>
+
+
+
+	
 	<h2 align="center" style="color: black;">댓글</h2>
 	<div id="replyLi">
 		<ul style="list-style: none;" id="replyId">
@@ -315,6 +410,7 @@
 		</c:if>
 
 	</div>
+	<h3>파일</h3>
 	<div class="pageA" align="center">
 	 <ul style="list-style:none; margin:1px;" class="pageTe">
 	

@@ -78,4 +78,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.boardDetail(bno);
 	}
 
+	@Override
+	public List<BoardFileVO> getBoardFileList(int bno) {
+		// TODO Auto-generated method stub
+		
+		return boardFileDAO.fileByBno(bno);
+	}
+
 }
