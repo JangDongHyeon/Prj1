@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,12 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -149,6 +153,45 @@ public class BoardFileController {
 			// TODO: handle exception
 		}
 		return "deleted";
+	}
+	@RequestMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> download(@RequestHeader("User-Agent")String userAgent, String fileName,HttpServletRequest request) {
+		String uploadFolder=getRootPath(request);
+		Resource resource=new FileSystemResource(uploadFolder+"//"+fileName);
+		
+		if(resource.exists()==false) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		String resourceName =resource.getFilename();
+		
+		logger.info("resourceName:"+resourceName);
+		
+		String resourceOriginalName =resourceName.substring(resourceName.indexOf("_")+1);
+		logger.info("resourceOriginalName:"+resourceOriginalName);
+		
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			
+			boolean check=(userAgent.indexOf("MSIE")>-1||userAgent.indexOf("Trident") > -1);
+			
+			String downloadName = null;
+			
+			if (check) {
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF8").replaceAll("\\+", " ");
+			} else {
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+					
+			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
 	

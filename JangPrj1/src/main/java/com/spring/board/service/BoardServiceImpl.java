@@ -50,16 +50,26 @@ public class BoardServiceImpl implements BoardService {
 		
 	
 	}
-
+	@Transactional
 	@Override
 	public boolean boardUpdate(BoardVO vo) {
 		// TODO Auto-generated method stub
-		return boardDAO.boardUpdate(vo);
+		boardFileDAO.deleteAll(vo.getBno());
+		
+		boolean modifyResult=boardDAO.boardUpdate(vo);
+		if(modifyResult&&vo.getBoardFileList().size()>0) {
+			for(BoardFileVO v:vo.getBoardFileList()) {
+				v.setBno(vo.getBno());
+				boardFileDAO.insert(v);
+			}
+		}
+		return modifyResult;
 	}
-
+	@Transactional
 	@Override
 	public boolean boardDelete(int bno) {
 		// TODO Auto-generated method stub
+		boardFileDAO.deleteAll(bno);
 		return boardDAO.boardDelete(bno);
 	}
 	@Transactional

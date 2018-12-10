@@ -10,5 +10,7 @@ public interface BoardFileDAO {
 	void insert(BoardFileVO vo);
 	void delete(String uuid);
 	List<BoardFileVO> fileByBno(int bno);
+	public void deleteAll(int bno);
+	public List<BoardFileVO> getOldFiles();
 	
 }

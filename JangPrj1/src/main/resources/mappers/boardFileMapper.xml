@@ -43,4 +43,16 @@ WHERE uuid=#{uuid}
   bno=#{bno}
 </select>
 
+<delete id="deleteAll">
+ DELETE board_file WHERE bno =#{bno}
+</delete>
+
+<select id="getOldFiles" resultType="com.spring.board.dvo.BoardFileVO">
+ 	SELECT
+ 	 *
+ 	FROM
+ 	board_file
+ 	WHERE
+ 	uploadpath=TO_CHAR(system-1,'yyyy/mm/dd')
+</select>
 </mapper>

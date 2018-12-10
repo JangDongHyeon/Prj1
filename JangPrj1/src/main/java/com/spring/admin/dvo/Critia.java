@@ -1,5 +1,10 @@
 package com.spring.admin.dvo;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.spring.shoping.dvo.SearchVO;
+
 public class Critia {
 
 	private int page;
@@ -72,8 +77,6 @@ public class Critia {
 		}
 		this.numPage = numPage;
 	}
-
-
 
 	
 }

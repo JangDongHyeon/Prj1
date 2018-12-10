@@ -31,4 +31,16 @@ public class BoardFileDAOImpl implements BoardFileDAO {
 		return sqlsession.selectList("bFile.findByBno",bno);
 	}
 
+	@Override
+	public void deleteAll(int bno) {
+		// TODO Auto-generated method stub
+		sqlsession.delete("bFile.deleteAll",bno);
+	}
+
+	@Override
+	public List<BoardFileVO> getOldFiles() {
+		// TODO Auto-generated method stub
+		return sqlsession.selectList("bFile.getOldFiles");
+	}
+
 }

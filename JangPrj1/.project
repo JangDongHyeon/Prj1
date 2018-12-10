@@ -44,4 +44,21 @@
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/webapp/resources/upload/2018/12/08</name>
+			<type>2</type>
+			<locationURI>PARENT-4-PROJECT_LOC/eclipse-workspace7/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/JangPrj1/resources/upload/2018/12/08</locationURI>
+		</link>
+		<link>
+			<name>src/main/webapp/resources/upload/2018/12/09</name>
+			<type>2</type>
+			<locationURI>PARENT-4-PROJECT_LOC/eclipse-workspace7/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/JangPrj1/resources/upload/2018/12/09</locationURI>
+		</link>
+		<link>
+			<name>src/main/webapp/resources/upload/2018/12/10</name>
+			<type>2</type>
+			<locationURI>PARENT-4-PROJECT_LOC/eclipse-workspace7/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/JangPrj1/resources/upload/2018/12/10</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
   top:0%;
-  width:100%;
+  width:70%;
   height:100%;
   background-color: gray; 
   z-index: 100;
@@ -344,6 +344,41 @@
 		
 		
 	}
+	$(document).ready(function(){
+		$(".uploadResult").on("click","li",function(e){
+			var liObj=$(this);
+			
+		    var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
+		  
+		    if(liObj.data("filetype")===true){
+		    
+		    	showImage(path.replace(new RegExp(/\\/g),"/"));
+		    }else{
+		    	self.location="/BFile/download?fileName="+path;
+		    }
+		    
+		});
+		
+		 function showImage(fileCallPath){
+			    
+			 
+			    
+			    $(".bigPictureWrapper").css("display","flex").show();
+			    
+			    $(".bigPicture")
+			    .html("<img src='/BFile/display?fileName="+fileCallPath+"' >")
+			    .animate({width:'100%', height: '100%'}, 1000);
+			    
+			  }
+		 $(".bigPictureWrapper").on("click", function(e){
+			    $(".bigPicture").animate({width:'0%', height: '0%'}, 1000);
+			    setTimeout(function(){
+			      $('.bigPictureWrapper').hide();
+			    }, 1000);
+			  });
+
+		
+	});
 	
 </script>
 <form name="frm" method="get">
@@ -386,6 +421,7 @@
   <div class='bigPicture'>
   </div>
 </div>
+<h2 align="center" style="color: black;">파일다운로드</h2>
 <div class="uploadResult">
  <ul>
  
@@ -410,7 +446,6 @@
 		</c:if>
 
 	</div>
-	<h3>파일</h3>
 	<div class="pageA" align="center">
 	 <ul style="list-style:none; margin:1px;" class="pageTe">
 	

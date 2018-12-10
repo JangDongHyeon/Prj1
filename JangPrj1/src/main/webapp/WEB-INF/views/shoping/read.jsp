@@ -4,6 +4,30 @@
 <%@include file="../include/header.jsp"%>
 
 <%@include file="../include/sub_menu.jsp"%>
+<style>
+	.bigPictureWrapper {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top:0%;
+  width:70%;
+  height:70%;
+  background-color: gray; 
+  z-index: 100;
+  background:rgba(255,255,255,0.5);
+}
+.bigPicture {
+  position: relative;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigPicture img {
+  width:300px;
+}
+</style>
 <script>	
 
 	$(document).ready(function() {
@@ -268,13 +292,34 @@
 			formObj.submit();
 		});
 		
+		
+		
 	});
 		
+	$(document).ready(function(){
+		$("#picl").on("click",function(){
+			var img='${readVO.image}';
+			  $(".bigPictureWrapper").css("display","flex").show();
+			    
+			    $(".bigPicture")
+			    .html("<img src='/resources/product_images/"+img+"' >")
+			    .animate({width:'100%', height: '100%'}, 1000);
+		});
+		$(".bigPictureWrapper").on("click", function(e){
+		    $(".bigPicture").animate({width:'0%', height: '0%'}, 1000);
+		    setTimeout(function(){
+		      $('.bigPictureWrapper').hide();
+		    }, 1000);
+		  });
+	});
 	
 	
 </script>
 
-
+<div class='bigPictureWrapper'>
+  <div class='bigPicture'>
+  </div>
+</div>
 <article>
 	<h1>상품 상세</h1>
 	<div id="itemdetail">
@@ -289,7 +334,7 @@
 			
 			<fieldset>
 			
-				<span style="float: left;"> <img
+				<span style="float: left;"> <img id="picl"
 					src="/resources/product_images/${readVO.image}">
 				</span>
 				<h2 style="color: black;">${readVO.name}</h2>

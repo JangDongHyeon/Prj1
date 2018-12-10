@@ -1,10 +1,14 @@
 package com.spring.board.controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,7 @@ import com.spring.board.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService boardDAO;
+
 	
 	@RequestMapping("/boardSelect")
 	public String boardSelect(Model model,@ModelAttribute("searchVO")SearchVO vo) {
@@ -69,22 +74,32 @@ public class BoardController {
 		return "board/boardDetail";
 	}
 	
-	@RequestMapping(value="boardUpdate",method=RequestMethod.GET)
+	@RequestMapping(value="boardModify",method=RequestMethod.GET)
 	public String boardUpdateGET(@RequestParam("bno")int bno,Model model,@ModelAttribute("searchVO")SearchVO searchVO,HttpSession session) {
-		model.addAttribute("list",boardDAO.boardDetail(bno,session));
+		model.addAttribute("boardVO",boardDAO.boardDetail(bno,session));
 		return "board/boardUpdate";
 	}
-	@RequestMapping(value="boardUpdate",method=RequestMethod.POST)
+	@RequestMapping(value="boardModify",method=RequestMethod.POST)
 	public String boardUpdatePOST(BoardVO vo,RedirectAttributes rttr,@ModelAttribute("searchVO")SearchVO searchVO) {
+
 		if(boardDAO.boardUpdate(vo)) 
 			rttr.addFlashAttribute("msg","글이 업데이트 되었습니다");
 		return "redirect:/board/boardSelect";	
 		
 	}
 	@RequestMapping("/boardDelete")
-	public String boardDelete(@RequestParam("bno")int bno,RedirectAttributes rttr,@ModelAttribute("searchVO")SearchVO searchVO) {
-		boardDAO.boardDelete(bno);
+	public String boardDelete(@RequestParam("bno")int bno,RedirectAttributes rttr,SearchVO searchVO,HttpServletRequest request) {
+		
+		List<BoardFileVO> FileList=boardDAO.getBoardFileList(bno);
+		
+		if(boardDAO.boardDelete(bno)) {
+			
+			deleteFiles(FileList, request);
+		
+		
 			rttr.addFlashAttribute("msg","글이 삭제되었습니다");
+			rttr.addFlashAttribute("searchVO",searchVO);
+		}	
 		return "redirect:/board/boardSelect";	
 	}
 	
@@ -96,6 +111,34 @@ public class BoardController {
 	}
 	
 	
-	
+	private void deleteFiles(List<BoardFileVO> boardFileList,HttpServletRequest request) {
+		if(boardFileList==null||boardFileList.size()==0) {
+			return;
+		}
+		String uploadPath=getRootPath(request);
+		try {
+			for(BoardFileVO vo:boardFileList) {
+				Path file=Paths.get(uploadPath+"\\",vo.getUploadPath()+"\\"+vo.getUuid()+"_"+vo.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail=Paths.get(uploadPath+"\\",vo.getUploadPath()+"\\s_"+vo.getUuid()+"_"+vo.getFileName());
+							
+					Files.delete(thumbNail);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+	}
+
+	public String getRootPath(HttpServletRequest request) {
+		String rootPatha="/resources/upload";
+		return request.getSession().getServletContext().getRealPath(rootPatha);
+		
+	}
 	
 }
