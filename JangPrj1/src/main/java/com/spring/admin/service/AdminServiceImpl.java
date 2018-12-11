@@ -71,6 +71,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void AdproductUpdate(ProductVO vo) throws Exception {
 		// TODO Auto-generated method stub
+		if(vo.getBestyn()==null) {
+			vo.setBestyn("n");
+		}
+		if(vo.getUseyn()==null) {
+			vo.setUseyn("n");
+		}
 		admindao.AdproductUpdate(vo);
 	}
 

@@ -34,7 +34,7 @@
  
 <div id="front">
 <!-- 신상품 메뉴 -->
-	<h2>신상품</h2>
+	<h2 style="color: black;">신상품</h2>
 	<div id="bestProduct">
 	  <c:forEach var="newI" items="${newItem}">
 		<div id="item">
@@ -49,7 +49,7 @@
 	</div>
 <div class="clear"></div>
 <!-- 베스트 메뉴 -->
-    <h2>베스트 메뉴</h2>
+    <h2 style="color: black;">베스트 메뉴</h2>
 	<div id="bestProduct">
 	  <c:forEach var="best" items="${bestItem}">
 		<div id="item">

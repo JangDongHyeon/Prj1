@@ -39,5 +39,6 @@
 	<context:component-scan base-package="com.spring.board"/>
 	<context:component-scan base-package="com.spring.admin"/>
 	<context:component-scan base-package="com.spring.qna"/>
+	<context:component-scan base-package="com.spring.reset"/>
 	
 	</beans:beans>

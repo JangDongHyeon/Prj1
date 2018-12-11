@@ -111,6 +111,7 @@
 		
 			if(userId===null||userId===''||userId==='null'){
 				alert("로그인을 해주세요");
+				self.location='${path}/member/login';
 				return;
 			}
 			$.ajax({
@@ -273,6 +274,7 @@
 			var userId='<%=(String)session.getAttribute("userId")%>'
 				if(userId==='null'){
 					alert("로그인을 해주세요");
+					self.location='${path}/member/login';
 					return;
 				}
 			
@@ -285,6 +287,7 @@
 			var userId='<%=(String)session.getAttribute("userId")%>'
 				if(userId==='null'){
 					alert("로그인을 해주세요");
+					self.location='${path}/member/login';
 					return;
 				}
 			var formObj=$("form[name=formm]");

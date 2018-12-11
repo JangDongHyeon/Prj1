@@ -69,6 +69,37 @@
 
 	</filter-mapping>
 
+<!-- error page -->
+	<error-page>
+	 	<exception-type>java.lang.Throwable</exception-type>
+		<location>/common/error/throwable</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>java.lang.Exception</exception-type>
+		<location>/common/error/exception</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>404</exception-type>
+		<location>/common/error/404</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>403</exception-type>
+		<location>/common/error/403</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>500</exception-type>
+		<location>/common/error/500</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>503</exception-type>
+		<location>/common/error/503</location>
+	</error-page>
+	<error-page>
+	 	<exception-type>405</exception-type>
+		<location>/common/error/405</location>
+	</error-page>
+	
+	
 	
 
 

@@ -17,6 +17,7 @@ public class ProductVO {
 	private String title;
 	private int loveCh;
 	
+	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
 	}

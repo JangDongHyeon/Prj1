@@ -61,6 +61,8 @@
 		price3=#{price3},
 		content=#{content},
 		image=#{image},
+		bestyn=#{bestyn},
+		useyn=#{useyn},
 		indate=sysdate
 		WHERE pseq=#{pseq}
 	

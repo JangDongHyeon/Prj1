@@ -43,7 +43,14 @@ public class FileCheckTask {
 				.collect(Collectors.toList());
 		
 		fileList.stream().filter(vo->vo.getFiletype().equals("true"))
-		.map(mapper)
+		.map(vo->Paths.get(uploadFoder,vo.getUploadPath(),"s_",vo.getUuid()+"_"+vo.getFileName())).forEach(p->fileListPaths.add(p));
+		
+		File targetDir=Paths.get(uploadFoder,getFolder()).toFile();
+		
+		File[] removeFile=targetDir.listFiles(file->fileListPaths.contains(file.toPath())==false);
+		for(File file:removeFile) {
+		file.delete();
+		}
 	}
 	public String getRootPath(HttpServletRequest request) {
 		String rootPatha="/resources/upload";

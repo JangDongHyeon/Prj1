@@ -63,7 +63,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public void AdproductUpdate(ProductVO vo) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubs
 		sqlSession.update("admin.AdproductUpdate",vo);
 	}
 

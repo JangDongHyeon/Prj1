@@ -324,7 +324,7 @@
 				if(data.filetype=='true'){
 			           var fileCallPath =  encodeURIComponent( data.uploadPath+ "/s_"+data.uuid +"_"+data.fileName);
 			           var fileCallPathImg =  encodeURIComponent( data.uploadPath+ "/"+data.uuid +"_"+data.fileName);
-			       
+			           strI += "<img src='${path}/BFile/display?fileName="+fileCallPathImg+"'><br>";
 			           str += "<li data-path='"+data.uploadPath+"' data-uuid='"+data.uuid+"' data-filename='"+data.fileName+"' data-filetype='"+data.filetype+"' ><div>";
 			           str += "<img src='${path}/BFile/display?fileName="+fileCallPath+"'>";
 			           str += "</div>";
@@ -340,6 +340,7 @@
 			         }
 			});
 		      $(".uploadResult ul").html(str);
+		      $(iomg).append(strI);
 		});
 		
 		
@@ -405,14 +406,19 @@
 
 	</div>
 	<hr>
-	<div style="height: 400px; width: 100%; font-size: 13px;">
-	<img id="iomg">
-		${boardVO.content}</div>
+	<div style=" width: 100%; font-size: 18px;">
+		<div id="iomg"></div>
+		${boardVO.content}
+		
+		</div>
 	<hr>
 	<div>
+		<c:if test="${userScope.userId==boardVO.bid}">
 		<button class="submit" id="loveChk">추천</button>
 		<button class="submit" id="b_modify">수정</button>
 		<button class="submit" id="b_delete">삭제</button>
+		</c:if>
+	
 		<button style="margin: 0" class="submit" id="b_list">리스트</button>
 
 	</div>

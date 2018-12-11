@@ -6,18 +6,21 @@
 	<select id="bestItem"
 		resultType="com.spring.shoping.dvo.ProductVO">
 		SELECT
-		p.pseq,
+		pseq,
+		name,
+		price2,
+		image,
+		loveCh
+		FROM (select rownum, p.pseq,
 		name,
 		price2,
 		image,
 		NVL(l.love_check,0) loveCh
-	
-		FROM PRODUCT p LEFT JOIN  pr_love l ON p.pseq=l.pseq
+      from product p LEFT JOIN  pr_love l ON p.pseq=l.pseq  
+      WHERE bestyn='y' 
+     ORDER BY indate DESC)
 		WHERE
-		bestyn='y'
-		AND
 		rownum &lt;= 4
-		ORDER BY indate DESC
 
 	</select>
 	
@@ -54,17 +57,21 @@
 	<select id="newItem"
 		resultType="com.spring.shoping.dvo.ProductVO">
 		SELECT
-		p.pseq,
+		pseq,
+		name,
+		price2,
+		image,
+		loveCh
+		FROM (select rownum, p.pseq,
 		name,
 		price2,
 		image,
 		NVL(l.love_check,0) loveCh
-		FROM PRODUCT p LEFT JOIN  pr_love l ON p.pseq=l.pseq
+      from product p LEFT JOIN  pr_love l ON p.pseq=l.pseq  
+      WHERE useyn='y'  
+     ORDER BY indate DESC)
 		WHERE
-		rownum &lt;=4
-		AND
-		useyn='y'
-		ORDER BY indate DESC
+		rownum &lt;= 4
 
 
 	</select>

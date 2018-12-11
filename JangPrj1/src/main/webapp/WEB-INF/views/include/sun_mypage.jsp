@@ -3,8 +3,7 @@
 <nav id="sub_menu">
 	<ul>
 	  <li><a href="${path}/cart/cartList">CART</a></li>
-	  <li><a href="${path}/order/mypage">진행중인 상품</a></li>
-	  <li><a>총 주문내역</a></li>
-	  <li><a href="${path}/member/memberModify?id=${sessionScope.userId}">회원수정</a></li>
+	  <li><a href="${path}/order/mypage">Product in progress</a></li>
+	  <li><a href="${path}/member/memberModify?id=${sessionScope.userId}">Edit Members</a></li>
 	</ul>
 </nav>
