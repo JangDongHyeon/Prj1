@@ -3,14 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring-config/applicationContext.xml</param-value>
 	</context-param>
 
 
-	
+
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -25,23 +26,19 @@
 			<param-value>/WEB-INF/spring-config/dispatcher-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-	
+
 	</servlet>
-		
+
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-<filter>
+	<filter>
 
 		<filter-name>encodingFilter</filter-name>
 
-		<filter-class>
-
-			org.springframework.web.filter.CharacterEncodingFilter
-
-		</filter-class>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 
 		<init-param>
 
@@ -69,38 +66,41 @@
 
 	</filter-mapping>
 
-<!-- error page -->
+
+
+
+	<!-- error page -->
 	<error-page>
-	 	<exception-type>java.lang.Throwable</exception-type>
+		<exception-type>java.lang.Throwable</exception-type>
 		<location>/common/error/throwable</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>java.lang.Exception</exception-type>
+		<exception-type>java.lang.Exception</exception-type>
 		<location>/common/error/exception</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>404</exception-type>
+		<exception-type>404</exception-type>
 		<location>/common/error/404</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>403</exception-type>
+		<exception-type>403</exception-type>
 		<location>/common/error/403</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>500</exception-type>
+		<exception-type>500</exception-type>
 		<location>/common/error/500</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>503</exception-type>
+		<exception-type>503</exception-type>
 		<location>/common/error/503</location>
 	</error-page>
 	<error-page>
-	 	<exception-type>405</exception-type>
+		<exception-type>405</exception-type>
 		<location>/common/error/405</location>
 	</error-page>
-	
-	
-	
+
+
+
 
 
 

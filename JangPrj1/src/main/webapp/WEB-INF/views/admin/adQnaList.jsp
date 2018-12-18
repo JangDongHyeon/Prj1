@@ -42,20 +42,7 @@
 			</table>
 		</form>
 	</article>
-<!-- 	<div id="myModal" class="modal">
 
-		<div class="modal-content">
-			<form method="post" name="formm">
-				<h2 style="color: black;">QNA 게시판</h2>
-				제목:<input type="text" name="subject"> <br> 등록일:
-				
-				<br> 내용:<input type="text" name="con">
-				<hr>
-				<textarea name="content" rows="3" cols="50"></textarea>
-				<input type="button" class="btn" value="저장">
-			</form>
-		</div>
-	</div> -->
 	<%@ include file="include/footer.jsp"%>
 
 </body>

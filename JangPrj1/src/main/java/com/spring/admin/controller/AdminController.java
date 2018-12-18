@@ -57,77 +57,76 @@ public class AdminController {
 	private ShopingService shopingService;
 	@Autowired
 	private QnaService qnaService;
-	
-	
-	@RequestMapping(value="/login",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String adminLoginGet() {
-		
+
 		return "admin/loginForm";
-		
-		
+
 	}
-	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String adminLoginPost(AdminVO vo,Model model,HttpSession session) {
-		String msg="";
-	
-		if(!adminService.adminCheck(vo, session)){
-			msg="아이디 및 비밀번호를 확인해주세요";
-			model.addAttribute("msg",msg);
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String adminLoginPost(AdminVO vo, Model model, HttpSession session) {
+		String msg = "";
+
+		if (!adminService.adminCheck(vo, session)) {
+			msg = "아이디 및 비밀번호를 확인해주세요";
+			model.addAttribute("msg", msg);
 			return "/admin/loginForm";
 		}
 		return "redirect:/admin/productList";
-		
+
 	}
+
 	@RequestMapping("/logout")
-	public String adminLogout(HttpSession session,RedirectAttributes rttr) {
+	public String adminLogout(HttpSession session, RedirectAttributes rttr) {
 		adminService.logout(session);
-		rttr.addFlashAttribute("msg","로그아웃");
+		rttr.addFlashAttribute("msg", "로그아웃");
 		return "redirect:/admin/login";
 	}
-	@RequestMapping("/productList")
-	public String adminProList(@ModelAttribute("searchIn")SearchVO vo,Model model) {
-		logger.info("productList called");
-		
-		
-		int count=adminService.AdpageCount(vo);
-		PageMaker maker=new PageMaker(vo, count);
 
-		model.addAttribute("pageMaker",maker);
-		
-		int startPage=maker.getStartPageto();
-		int endPage=maker.getEndPageto();
-	
-		vo.setEndPageto(endPage);vo.setStartPageto(startPage);
-		model.addAttribute("list",adminService.AdproductList(vo));
-	
+	@RequestMapping("/productList")
+	public String adminProList(@ModelAttribute("searchIn") SearchVO vo, Model model) {
+		logger.info("productList called");
+
+		int count = adminService.AdpageCount(vo);
+		PageMaker maker = new PageMaker(vo, count);
+
+		model.addAttribute("pageMaker", maker);
+
+		int startPage = maker.getStartPageto();
+		int endPage = maker.getEndPageto();
+
+		vo.setEndPageto(endPage);
+		vo.setStartPageto(startPage);
+		model.addAttribute("list", adminService.AdproductList(vo));
+
 		return "admin/productList";
-	
+
 	}
-	@RequestMapping(value="/adminInsert",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/adminInsert", method = RequestMethod.GET)
 	public String amdinInsertGet(Model model) {
-		String kind[]= {"Heels","Boots","Sandals","Sneakers","On Sale"};
-		model.addAttribute("kindList",kind);
+		String kind[] = { "Heels", "Boots", "Sandals", "Sneakers", "On Sale" };
+		model.addAttribute("kindList", kind);
 		return "admin/write";
 	}
-	
-	@RequestMapping(value="/adminInsert",method=RequestMethod.POST)
-	public String amdinInsertPOST(MultipartFile uploadFile ,ProductVO vo,RedirectAttributes rttr,HttpServletRequest request) {
-		
-		//String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
-	
-		
-	
+
+	@RequestMapping(value = "/adminInsert", method = RequestMethod.POST)
+	public String amdinInsertPOST(MultipartFile uploadFile, ProductVO vo, RedirectAttributes rttr,
+			HttpServletRequest request) {
+
 		logger.info("===================");
-		logger.info("Upload file name:"+uploadFile.getOriginalFilename());
-		logger.info("upload file size:"+uploadFile.getSize());
-		String uploadFileName=uploadFile.getOriginalFilename();
-		uploadFileName=uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-		logger.info("only file name: "+uploadFileName);
-		UUID uuid=UUID.randomUUID();
-		uploadFileName=uuid.toString()+"_"+uploadFileName;
-		String uploadFolder=getRootPath(request);
-		File saveFile=new File(uploadFolder,uploadFileName);
-		
+		logger.info("Upload file name:" + uploadFile.getOriginalFilename());
+		logger.info("upload file size:" + uploadFile.getSize());
+		String uploadFileName = uploadFile.getOriginalFilename();
+		uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+		logger.info("only file name: " + uploadFileName);
+		UUID uuid = UUID.randomUUID();
+		uploadFileName = uuid.toString() + "_" + uploadFileName;
+		String uploadFolder = getRootPath(request);
+		File saveFile = new File(uploadFolder, uploadFileName);
+
 		try {
 			uploadFile.transferTo(saveFile);
 			vo.setImage(uploadFileName);
@@ -135,67 +134,70 @@ public class AdminController {
 			logger.error(e.getMessage());
 			// TODO: handle exception
 		}
-		
-		if(adminService.AdproductInsert(vo)) rttr.addFlashAttribute("msg","추가완료");
+
+		if (adminService.AdproductInsert(vo))
+			rttr.addFlashAttribute("msg", "추가완료");
 		return "redirect:/admin/productList";
 	}
+
 	@RequestMapping("/adDetail")
-	public String adminDetail(@ModelAttribute("searchIn")SearchVO searchVO,@RequestParam("pseq")int pseq,Model model) throws Exception {
+	public String adminDetail(@ModelAttribute("searchIn") SearchVO searchVO, @RequestParam("pseq") int pseq,
+			Model model) throws Exception {
 		logger.info("adDetail");
-		
-		
-		model.addAttribute("vo",shopingService.readItem(pseq));
-		
+
+		model.addAttribute("vo", shopingService.readItem(pseq));
+
 		return "admin/adDetail";
-		
-		
+
 	}
+
 	@RequestMapping("/delete")
-	public String adDelete(@ModelAttribute("searchIn")SearchVO searchVO,ProductVO vo) {
+	public String adDelete(@ModelAttribute("searchIn") SearchVO searchVO, ProductVO vo,HttpServletRequest request) {
 		logger.info("adDelete");
-		String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
-		File file=new File(uploadFolder,vo.getImage());
+		String uploadFolder = getRootPath(request);
+		File file = new File(uploadFolder, vo.getImage());
 		file.delete();
 		adminService.AdProDelete(vo);
-		
+
 		return "redirect:/admin/productList";
-		
+
 	}
-	@RequestMapping(value="/modify",method=RequestMethod.GET)
-	public String adModify(@ModelAttribute("searchIn")SearchVO searchVO,Model model,@RequestParam("pseq")int pseq) throws Exception {
-		String kind[]= {"Heels","Boots","Sandals","Sneakers","On Sale"};
-		model.addAttribute("kindList",kind);
-		model.addAttribute("productVO",shopingService.readItem(pseq));
-		
-		return "admin/ProModify"; 
+
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public String adModify(@ModelAttribute("searchIn") SearchVO searchVO, Model model, @RequestParam("pseq") int pseq)
+			throws Exception {
+		String kind[] = { "Heels", "Boots", "Sandals", "Sneakers", "On Sale" };
+		model.addAttribute("kindList", kind);
+		model.addAttribute("productVO", shopingService.readItem(pseq));
+
+		return "admin/ProModify";
 	}
-	
-	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String adModifyPost(@ModelAttribute("searchIn")SearchVO searchVO,Model model,ProductVO vo,MultipartFile uploadFile,
-			HttpServletRequest req) throws Exception {
-		
-		if(!uploadFile.isEmpty()) {
-			String uploadFolder="C:\\Users\\장동현\\eclipse-workspace7\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JangPrj1\\resources\\product_images";
-			System.out.println("이미지 이름:"+uploadFolder+"\\"+vo.getImage());
-			
-			File deleteFile=new File(uploadFolder+"\\",URLDecoder.decode(vo.getImage(),"UTF-8"));
-			if(deleteFile.exists()) {
-			deleteFile.delete();
-			}else {
+
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String adModifyPost(@ModelAttribute("searchIn") SearchVO searchVO, Model model, ProductVO vo,
+			MultipartFile uploadFile, HttpServletRequest req) throws Exception {
+
+		if (!uploadFile.isEmpty()) {
+			String uploadFolder = getRootPath(req);
+			System.out.println("이미지 이름:" + uploadFolder + "\\" + vo.getImage());
+
+			File deleteFile = new File(uploadFolder + "\\", URLDecoder.decode(vo.getImage(), "UTF-8"));
+			if (deleteFile.exists()) {
+				deleteFile.delete();
+			} else {
 				logger.info("=============================파일이없스비다");
 			}
 			logger.info(uploadFolder);
 			logger.info("===================");
-			logger.info("Upload file name:"+uploadFile.getOriginalFilename());
-			logger.info("upload file size:"+uploadFile.getSize());
-			String uploadFileName=uploadFile.getOriginalFilename();
-			uploadFileName=uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			logger.info("only file name: "+uploadFileName);
-			UUID uuid=UUID.randomUUID();
-			uploadFileName=uuid.toString()+"_"+uploadFileName;
-			
-			
-			File saveFile=new File(uploadFolder,uploadFileName);
+			logger.info("Upload file name:" + uploadFile.getOriginalFilename());
+			logger.info("upload file size:" + uploadFile.getSize());
+			String uploadFileName = uploadFile.getOriginalFilename();
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+			logger.info("only file name: " + uploadFileName);
+			UUID uuid = UUID.randomUUID();
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+
+			File saveFile = new File(uploadFolder, uploadFileName);
 			try {
 				uploadFile.transferTo(saveFile);
 				vo.setImage(uploadFileName);
@@ -205,60 +207,64 @@ public class AdminController {
 			}
 		}
 		adminService.AdproductUpdate(vo);
-		
-		
-		return "redirect:/admin/modify?pseq="+vo.getPseq(); 
+
+		return "redirect:/admin/modify?pseq=" + vo.getPseq();
 	}
-	//구입
-	@RequestMapping(value="orderList",method=RequestMethod.GET)
-	public String orderListGet(Model model,@RequestParam(value="keyword",defaultValue="")String id) {
-		
-		model.addAttribute("orderList",adminService.AdOrderList(id));
+
+	// 구입
+	@RequestMapping(value = "orderList", method = RequestMethod.GET)
+	public String orderListGet(Model model, @RequestParam(value = "keyword", defaultValue = "") String id) {
+
+		model.addAttribute("orderList", adminService.AdOrderList(id));
 		return "admin/orderList";
 	}
-	@RequestMapping(value="orderList",method=RequestMethod.POST)
+
+	@RequestMapping(value = "orderList", method = RequestMethod.POST)
 	@ResponseBody
-	public String orderListPost(@RequestParam("arrayList[]")int[] obseq) {
-	
-		String msg="";
-		for(int p:obseq) {
-		adminService.AdOrderUpdate(p);
-		msg="success";
+	public String orderListPost(@RequestParam("arrayList[]") int[] obseq) {
+
+		String msg = "";
+		for (int p : obseq) {
+			adminService.AdOrderUpdate(p);
+			msg = "success";
 		}
-		return msg;	
+		return msg;
 	}
-	
+
 	@RequestMapping("/memberList")
-	public String memberList(@RequestParam(value="keyword",defaultValue="")String id,Model model) {
-		
-		model.addAttribute("memberVO",adminService.AdMemberList(id));
-		
+	public String memberList(@RequestParam(value = "keyword", defaultValue = "") String id, Model model) {
+
+		model.addAttribute("memberVO", adminService.AdMemberList(id));
+
 		return "admin/memberList";
 	}
-	
+
 	@RequestMapping("/adQnaList")
 	public String adQnaList(Model model) {
-		model.addAttribute("qnaList",adminService.AdQnaList());
+		model.addAttribute("qnaList", adminService.AdQnaList());
 		return "admin/adQnaList";
 	}
+
 	@RequestMapping("/qnaDetail")
-	public String qnaDetail(Model model,@RequestParam("qseq")int qseq) {
-		model.addAttribute("qnaVO",qnaService.qnaDetail(qseq));
-		
+	public String qnaDetail(Model model, @RequestParam("qseq") int qseq) {
+		model.addAttribute("qnaVO", qnaService.qnaDetail(qseq));
+
 		return "admin/qnaDetail";
 	}
+
 	@RequestMapping("/adModifyQna")
 	public String adModifyQna(QnaVO vo) {
-		
+
 		adminService.adQnaUpdate(vo);
-		
+
 		return "redirect:/admin/adQnaList";
-		
+
 	}
+
 	public String getRootPath(HttpServletRequest request) {
-		String rootPatha="/resources/product_images";
+		String rootPatha = "/resources/product_images";
 		return request.getSession().getServletContext().getRealPath(rootPatha);
-		
+
 	}
-	
+
 }

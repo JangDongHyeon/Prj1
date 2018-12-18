@@ -25,15 +25,15 @@ import com.spring.shoping.dvo.SearchVO;
 @RequestMapping("/cart/*")
 @Controller
 public class CartController {
-	private static final Logger logger = LoggerFactory.getLogger(ShopingController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 	@Autowired
 	private CartService cartService;
 	
 	@RequestMapping("/cartList")
 	public String cartList(HttpSession session,Model model){
+		logger.info("cartList...called");
 		String userId=(String)session.getAttribute("userId");
 	
-		//model.addAttribute("get",cartService.cartSelPseq(userId));
 		model.addAttribute("list",cartService.cartList(userId));
 		
 		return "cart/cartList";
@@ -41,6 +41,7 @@ public class CartController {
 	@RequestMapping("/cartDel")
 	@ResponseBody
 	public String cartDelete(@RequestParam(value="charray[]")List<Integer> cseq) {
+		logger.info("cartDelJson...called");
 		String msg="";
 		for(Integer i:cseq) {
 		if(cartService.cartDelete(i)) 
@@ -54,6 +55,7 @@ public class CartController {
 	
 	@RequestMapping("/cartDelete")
 	public String cartDelete(RedirectAttributes rttr,@RequestParam("checkVal")int[] checkVal) {
+		logger.info("cartDelete...called");
 		String msg="";
 		for(int i :checkVal) {
 		if(cartService.cartDelete(i)) {
@@ -66,7 +68,7 @@ public class CartController {
 	}
 	@RequestMapping(value="/cartInsert",method=RequestMethod.POST)
 	public String cartInsert(CartVO vo,RedirectAttributes rttr,HttpSession session,SearchVO seVO) {
-	
+		logger.info("cartInsertPost...called");
 		String userId=(String)session.getAttribute("userId");
 		vo.setId(userId);
 		

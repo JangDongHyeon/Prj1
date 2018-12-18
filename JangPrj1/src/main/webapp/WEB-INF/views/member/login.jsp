@@ -45,6 +45,10 @@
 	});
 	$("#findId").on("click",function(){
 		var email=$("form[name=frm]").find("input[name=email]").val();
+		if(email===""){
+			alert("이메일을 입력하세요");
+			return;
+		}
 		$("#memMsg").empty();
 		$("#dv").find("button").remove();
 		$.ajax({
@@ -54,15 +58,7 @@
 				
 				if(data!==""){
 				 $("#memMsg").html("회원의 아이디는  "+data+" 입니다");
-				/*  $("#dv").append("<button id=use>사용하기</button>")
-				
-					$("#use").on("click",function(){
-						$("#userId").val(data);
-						var modal=$("#myModal");
-						
-						$(modal).css("display","none");
-					}); */
-				 
+			
 				 
 				 }else $("#memMsg").html("가입된 아이디가 없습니다");
 			
@@ -75,13 +71,10 @@
 		var modal=$("#myModal");
 	
 		$(modal).css("display","none");
+		$("#memMsg").empty();
+		$("input[name=email]").val("");
 	
 	
-		
-
-	
-		
-		
 		
 	});
 
@@ -118,7 +111,7 @@
 	</c:choose>
 	<button class="submit" type="button" id="btnLogin">로그인</button>
 	<button class="submit" type="button" id="btnJoin">회원가입</button>
-	<button class="submit" type="button" id="btnFind">아이디/비밀번호찿기</button>
+	<button class="submit" type="button" id="btnFind">아이디찿기</button>
 
 
 </article>
@@ -131,10 +124,11 @@
 			<div id="dv"><span id="memMsg" style="color: red; font-size: 17px;"></span></div> <br>
 			<button type="button" id="findId" >아이디 찿기</button>
 			<button type="button" id="close">닫기</button>
-			<button type="button" id="findPw">비밀번호찿기</button>
 		</form>
 	</div>
 </div>
+
+
 
 
 <%@include file="../include/footer.jsp"%>

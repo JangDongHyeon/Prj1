@@ -73,10 +73,7 @@
 				}
 			});
 
-			/* 	var fromObj=$("form[name=formm]");
-				fromObj.attr("action","${path}/order/buyAll?list="+list);
-				fromObj.submit();
-			 */
+		
 		});
 
 	});

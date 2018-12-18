@@ -11,6 +11,12 @@
 
 $(document).ready(function(){
 	$("input[name=btn_write]").on("click",function(){
+		var user='<%=(String)session.getAttribute("userId")%>';
+		if(user==='null'){
+			alert("로그인을 하시고 이용하세요");
+			self.location='${path}/member/login';
+			return;
+		}
 		var frm=$('form[name=frm]');
 		$(frm).attr("action","${path}/board/boardInsert").submit();
 	});

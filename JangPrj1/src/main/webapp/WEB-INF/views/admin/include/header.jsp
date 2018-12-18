@@ -28,8 +28,8 @@ $(document).ready(function(){
 	<div id="wrap">
 		<header>
 			<div id="logo">
-				<a href="#">  <img width="600px" height="150px;" src="/resources/images/run_logo.png"> 
-				</a>
+				  <img width="600px" height="150px;" src="/resources/images/run_logo.png"> 
+				
 			</div>
 			<input class="btn" type="button" id="logout" value="logout" style="float: right;">
 		</header>

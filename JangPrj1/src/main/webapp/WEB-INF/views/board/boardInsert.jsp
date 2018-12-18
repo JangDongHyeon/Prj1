@@ -31,6 +31,7 @@
 </style>
 <script>
 $(document).ready(function(){
+	var cloneObj=$(".upFileIn").clone();
 	var frm=$("form[name=frmm]");
 	
 	$("input[type='submit']").on("click",function(e){
@@ -88,7 +89,7 @@ $(document).ready(function(){
 	      type: 'POST',
 	      dataType:'json',
 	        success: function(result){
-	          console.log(result); 
+	          $(".upFileIn").html(cloneObj.html());
 			  showUploadResult(result);
 	      }
 });
@@ -188,7 +189,7 @@ $(".uploadResult").on("click","button",function(e){
 </form>
 <br>
 <br>
-<div>
+<div class="upFileIn">
 <span>파일업로드</span><br>
  <input type="file" name='uploadFiles' multiple>
 </div>

@@ -324,7 +324,7 @@
 				if(data.filetype=='true'){
 			           var fileCallPath =  encodeURIComponent( data.uploadPath+ "/s_"+data.uuid +"_"+data.fileName);
 			           var fileCallPathImg =  encodeURIComponent( data.uploadPath+ "/"+data.uuid +"_"+data.fileName);
-			           strI += "<img src='${path}/BFile/display?fileName="+fileCallPathImg+"'><br>";
+			           strI += "<img width='150px' src='${path}/BFile/display?fileName="+fileCallPath+"'><br>";
 			           str += "<li data-path='"+data.uploadPath+"' data-uuid='"+data.uuid+"' data-filename='"+data.fileName+"' data-filetype='"+data.filetype+"' ><div>";
 			           str += "<img src='${path}/BFile/display?fileName="+fileCallPath+"'>";
 			           str += "</div>";
@@ -413,7 +413,7 @@
 		</div>
 	<hr>
 	<div>
-		<c:if test="${userScope.userId==boardVO.bid}">
+		<c:if test="${sessionScope.userId==boardVO.bid}">
 		<button class="submit" id="loveChk">추천</button>
 		<button class="submit" id="b_modify">수정</button>
 		<button class="submit" id="b_delete">삭제</button>
@@ -422,6 +422,7 @@
 		<button style="margin: 0" class="submit" id="b_list">리스트</button>
 
 	</div>
+	<img alt="" width="" src="">
 	
 	<div class='bigPictureWrapper'>
   <div class='bigPicture'>

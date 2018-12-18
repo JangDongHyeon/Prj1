@@ -38,7 +38,7 @@ public class ShopingController {
 
 	@RequestMapping("/main")
 	public String mainPage(Model model) throws Exception {
-		logger.info("shoping/main....called");
+		logger.info("main....called");
 		model.addAttribute("bestItem", shopginService.bestItem());
 		model.addAttribute("newItem", shopginService.newItem());
 
@@ -48,7 +48,7 @@ public class ShopingController {
 	@RequestMapping("/allList")
 	public String AllList(Model model, SearchVO critia, @RequestParam(value = "kind", defaultValue = "0") String kind)
 			throws Exception {
-		logger.info("shoping/catagory....called");
+		logger.info("allList....called");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		int count = shopginService.pageCount(critia);
@@ -66,7 +66,7 @@ public class ShopingController {
 
 	@RequestMapping("/readItem")
 	public String readItem(Model model, @RequestParam("pseq") int pseq,@ModelAttribute("searchIn")SearchVO searchVO) throws Exception {
-		logger.info("shoping/readItem....called");
+		logger.info("readItemGET....called");
 		model.addAttribute("readVO", shopginService.readItem(pseq));
 
 		return "shoping/read";
@@ -76,7 +76,7 @@ public class ShopingController {
 	@RequestMapping("/catagory")
 	public String catagoeyGET(Model model, @RequestParam(value = "kind", defaultValue = "0") String kind,
 			@ModelAttribute("searchIn") SearchVO critia) throws Exception {
-		logger.info("shoping/catagory....called");
+		logger.info("catagoryGET....called");
 		Map<String, Object> map = new HashMap<String, Object>();
 		kind = check(critia, kind);
 	

@@ -25,7 +25,7 @@ import com.spring.shoping.contoller.ShopingController;
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
-	private static final Logger logger = LoggerFactory.getLogger(ShopingController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired
 	private MemberService membetService;
 	
@@ -68,6 +68,7 @@ public class MemberController {
 	@RequestMapping(value="/checkId/{id}")
 	@ResponseBody
 	public Map<String, Object> checkId(@PathVariable("id")String id) throws Exception{
+		logger.info("checkId....called");
 		Map<String,Object> map=new HashMap<String, Object>();
 		
 		if(membetService.checkId(id)) {
@@ -83,8 +84,7 @@ public class MemberController {
 	@RequestMapping(value="/memberEmFind/{email}")
 	@ResponseBody
 	public String memberEmFind(@PathVariable("email")String email) {
-		System.out.println(email);
-		System.out.println(membetService.findEmail(email));
+		logger.info("memberEmFind....called");
 		return membetService.findEmail(email);
 	}
 	
@@ -99,13 +99,14 @@ public class MemberController {
 	}
 	@RequestMapping(value="/memberModify",method=RequestMethod.GET)
 	public String modifyGet(Model model,MemberVO vo) throws Exception {
+		logger.info("modifyGET....called");
 		model.addAttribute("vo",membetService.getMember(vo));
 		return "member/memberModify";
 		
 	}
 	@RequestMapping(value="/memberModify",method=RequestMethod.POST)
 	public String modifyPOST(MemberVO vo,RedirectAttributes rttr) throws Exception {
-
+		logger.info("memberModifyPOST....called");
 		
 		membetService.memberUpdate(vo);
 		rttr.addFlashAttribute("msg","수정완료");

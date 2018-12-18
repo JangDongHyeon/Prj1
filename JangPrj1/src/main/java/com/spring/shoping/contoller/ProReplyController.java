@@ -29,7 +29,7 @@ public class ProReplyController {
 	@Autowired
 	private ProReplyService proReplyService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(ShopingController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProReplyController.class);
 	
 	@RequestMapping("/list/{pseq}")
 	@ResponseBody

@@ -26,20 +26,7 @@ $(document).ready(function(){
 			$(this).attr("action","/admin/login");
 			return true;
 		}); 
-		/* $("#bt1").on("click",function(){
-			var frm=$("form");
-			if(frm.id.value===""){
-				$("#idP").html("아이디를 입력해주세요");
-				return;
-			}
-			if(frm.pwd.value===""){
-				$("#pwP").html("비밀번호를 입력해주세요");
-				return;
-			}
-			frm.attr("action","admin/login");
-			frm.submit();
-				
-		}); */
+		
 		
 	});
 

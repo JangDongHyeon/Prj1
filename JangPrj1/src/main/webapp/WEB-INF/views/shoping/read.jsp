@@ -182,67 +182,6 @@
 	});
 	}
 	
-	
-	<%-- function listAll() {
-		var userId='<%=(String) session.getAttribute("userId")%>';
-
-		var str = "";
-		$.ajax({
-		type : "get",
-		url : "${path}/proReply/list/${readVO.pseq}",
-		success : function(data) {
-		for ( var i in data) {
-		str += "<li><p>"+ "<input type=hidden name=rid value="+data[i].rid+">";
-		str += "아이디:&nbsp;" + data[i].reply + "<br>";
-		str += "내용:&nbsp;<span style='font-size: 15px;'>" + data[i].content	+ "</span><br>";
-		str += "날짜:&nbsp;" + cangeDate(data[i].updatedate);
-		if (userId === data[i].reply) {
-		str += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"
-			+ "<button class='cancel' id='reModify' >수정</button>&nbsp;<button class=cancel id='reDelete'>삭제</button>";
-
-					                  }
-			str += "</p></li>";
-			str += "<hr>";
-						}
-
-						$("#pro_reply").find("ul").html(str);
-
-						$('#reModify').click(function() {			
-							var modal = document.getElementById('myModal');
-							var rid = $(this).parent().find("input[name=rid]").val();
-							var content = $(this).parent().find("span").text();
-							$("#reContent").val(content);
-							$("#modalRid").val(rid);
-						
-								modal.style.display = "block";
-							
-							
-					});
-						
-						
-						$("#reDelete").on("click",function(){
-							var rid=$(this).parent().find("input[name=rid]").val();
-							if(confirm("정말 삭제하시겠습니까??") == true){
-
-							
-							$.ajax({
-								type:"get",
-								url:"${path}/proReply/delete/"+rid,
-								success:function(data){
-									if (data === "success") {
-										alert("삭제가 되었습니다");
-										listAll();
-									}
-								}
-							});
-							}
-						});	
-						
-
-				}
-		
-	});
-	} --%>
 
 	function cangeDate(date) {
 		data = new Date(parseInt(date));
